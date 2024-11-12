@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Resultant Force Graph Plotter</title>
+<script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    padding: 20px;
+  }
+  .container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h2, h3 {
+    color: #0066cc;
+  }
+  input {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #0066cc;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  #plot {
+    width: 100%;
+    height: 500px;
+  }
+  .solution {
+    margin-top: 20px;
+    padding: 10px;
+    background: #e0f7fa;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Interactive Resultant Force Graph Plotter</h2>
+  <p>Enter the magnitudes of two forces and the angle between them to plot the vectors and calculate the resultant force.</p>
+
+  <label>Force \( F_1 \) (in Newtons):</label>
+  <input type="number" id="force1" placeholder="Enter Force 1" required>
+
+  <label>Force \( F_2 \) (in Newtons):</label>
+  <input type="number" id="force2" placeholder="Enter Force 2" required>
+
+  <label>Angle \( \theta \) (in degrees):</label>
+  <input type="number" id="angle" placeholder="Enter Angle in Degrees" required>
+
+  <button onclick="calculateResultant()">Plot and Solve</button>
+
+  <div id="plot"></div>
+  <div class="solution" id="solution"></div>
+</div>
+
+<script>
+  function calculateResultant() {
+    // Get user inputs
+    const F1 = parseFloat(document.getElementById("force1").value);
+    const F2 = parseFloat(document.getElementById("force2").value);
+    const theta = parseFloat(document.getElementById("angle").value);
+
+    // Convert angle to radians
+    const thetaRad = (theta * Math.PI) / 180;
+
+    // Calculate Resultant Force Magnitude
+    const R = Math.sqrt(F1**2 + F2**2 + 2 * F1 * F2 * Math.cos(thetaRad));
+
+    // Calculate angle of Resultant (alpha)
+    const alpha = Math.atan2(F2 * Math.sin(thetaRad), F1 + F2 * Math.cos(thetaRad)) * (180 / Math.PI);
+
+    // Display the detailed solution using MathJax
+    const solutionText = `
+      <h3>Detailed Solution</h3>
+      <p><b>Given:</b></p>
+      <ul>
+        <li>Force \( F_1 = ${F1} \, \text{N} \)</li>
+        <li>Force \( F_2 = ${F2} \, \text{N} \)</li>
+        <li>Angle \( \\theta = ${theta}^\circ \)</li>
+      </ul>
+      <p><b>Step 1:</b> Convert angle to radians:</p>
+      <p>
+        \\[
+        \\theta_{\\text{rad}} = \\frac{\\pi}{180} \\times \\theta = ${thetaRad.toFixed(4)} \\text{ radians}
+        \\]
+      </p>
+      <p><b>Step 2:</b> Calculate the magnitude of the resultant force using the formula:</p>
+      <p>
+        \\[
+        R = \\sqrt{F_1^2 + F_2^2 + 2 F_1 F_2 \\cos(\\theta)}
+        \\]
+      </p>
+      <p>
+        Substituting the values:
+        \\[
+        R = \\sqrt{${F1}^2 + ${F2}^2 + 2 \\times ${F1} \\times ${F2} \\times \\cos(${theta}^\circ)}
+        \\]
+        \\[
+        R \\approx ${R.toFixed(2)} \, \\text{N}
+        \\]
+      </p>
+      <p><b>Step 3:</b> Calculate the direction of the resultant force (angle \\( \\alpha \\)):</p>
+      <p>
+        \\[
+        \\alpha = \\tan^{-1}\\left( \\frac{F_2 \\sin(\\theta)}{F_1 + F_2 \\cos(\\theta)} \\right)
+        \\]
+      </p>
+      <p>
+        Substituting the values:
+        \\[
+        \\alpha = \\tan^{-1}\\left( \\frac{${F2} \\times \\sin(${theta}^\circ)}{${F1} + ${F2} \\times \\cos(${theta}^\circ)} \\right)
+        \\]
+        \\[
+        \\alpha \\approx ${alpha.toFixed(2)}^\circ
+        \\]
+      </p>
+    `;
+    
+    document.getElementById("solution").innerHTML = solutionText;
+    MathJax.typeset();
+
+    // Plotting the vectors
+    const data = [
+      {
+        type: 'scatter',
+        mode: 'lines+markers',
+        x: [0, F1],
+        y: [0, 0],
+        name: `F1 = ${F1}N`,
+        line: {color: 'blue'}
+      },
+      {
+        type: 'scatter',
+        mode: 'lines+markers',
+        x: [F1, F1 + F2 * Math.cos(thetaRad)],
+        y: [0, F2 * Math.sin(thetaRad)],
+        name: `F2 = ${F2}N`,
+        line: {color: 'red'}
+      },
+      {
+        type: 'scatter',
+        mode: 'lines+markers',
+        x: [0, F1 + F2 * Math.cos(thetaRad)],
+        y: [0, F2 * Math.sin(thetaRad)],
+        name: `R ≈ ${R.toFixed(2)}N`,
+        line: {color: 'green', dash: 'dot'}
+      }
+    ];
+
+    const layout = {
+      title: 'Resultant Force Vector Plot',
+      xaxis: {title: 'X-axis (N)', zeroline: true},
+      yaxis: {title: 'Y-axis (N)', zeroline: true},
+      showlegend: true
+    };
+
+    Plotly.newPlot('plot', data, layout);
+  }
+</script>
+</body>
+</html>

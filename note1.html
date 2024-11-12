@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Year 1 Lesson Notes Page for Orli International School">
+    <meta name="author" content="Orli International School">
+    <title>Year 9 Lesson Notes - Orli International School</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FDF9F3;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .school-name {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2196F3;
+            text-shadow: 3px 3px 0px #FFB74D, 6px 6px 0px #4CAF50, 9px 9px 0px #F44336;
+            margin-top: 40px;
+        }
+
+        .welcome-message {
+            font-size: 2.2em;
+            color: #4CAF50;
+            margin-top: 15px;
+        }
+
+        .instructions {
+            font-size: 1.2em;
+            margin: 20px;
+        }
+
+        .date-time {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+            margin-bottom: 80px;
+        }
+
+        .button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #FFB74D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5em;
+            color: #4CAF50;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="school-name">
+        Mathcloud Tutorial 
+    </div>
+
+    <div class="welcome-message">
+        Year 9 Lesson Notes
+    </div>
+
+    <div class="date-time">
+        Date: <span id="current-date"></span> | Time: <span id="current-time"></span>
+    </div>
+
+    <div class="instructions">
+        Click on the subject buttons below to access the lesson notes.
+    </div>
+
+    <div class="buttons-container">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJMZE_5az_jcaHNULa7aIdbUTVeiNLIV5lkcRkkXjdv8j-7A/viewform" class="button">
+            Mathematics
+        </a>
+
+        <a href="y9s.html" class="button">
+            Science
+        </a>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Mathcloud Tutorial. All Rights Reserved.</p>
+        <p>Visit us: <a href="https://learn-mathcloud.vercel.app">Mathcloud Portal</a></p>
+    </footer>
+
+    <script>
+        // Function to update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').innerText = now.toLocaleDateString(undefined, options);
+            document.getElementById('current-time').innerText = now.toLocaleTimeString();
+        }
+
+        // Update date and time every second
+        setInterval(updateDateTime, 1000);
+        updateDateTime(); // Initial call
+    </script>
+</body>
+
+</html>

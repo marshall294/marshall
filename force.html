@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultant Force and Graphs Lesson</title>
+<script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+        padding: 20px;
+    }
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  h2, h3 {
+    color: #0066cc;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #0066cc;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  #plot {
+    width: 100%;
+    height: 500px;
+  }
+    .section {
+        margin-bottom: 20px;
+    }
+    .example, .interactive {
+        background: #e6f7ff;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .solution {
+        background: #dff0d8;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-align: left;
+        line-height: 1.6;
+    }
+  canvas {
+    border: 1px solid #ccc;
+    margin: 20px 0;
+  }
+    button {
+        padding: 10px 15px;
+        background-color: #0073e6;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    input, select {
+        padding: 8px;
+        margin: 5px 0;
+        width: 100px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+  p {
+    font-size: 16px;
+  }
+    /* Fixed Blinking Button Styles */
+    .blinking-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #e74c3c;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 18px;
+      font-weight: bold;
+      animation: blink 1.5s infinite alternate;
+      position: fixed;
+      top: 20px;
+      left: 80%;
+      transform: translateX(-50%);
+      z-index: 9999;
+    }
+    .blinking-button:hover {
+      background-color: #c0392b;
+    }
+    @keyframes blink {
+      0% { background-color: #e74c3c; }
+      50% { background-color: #f39c12; }
+      100% { background-color: #3498db; }
+    }
+</style>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2>Understanding Resultant Force and Graphs</h2>
+
+    <div class="section">
+        <h3>What is Resultant Force?</h3>
+        <p>The resultant force is the single force that has the same effect as two or more forces acting together. It is the vector sum of all forces acting on an object.</p>
+        <p><b>Formula:</b> If two forces, <i>F<sub>1</sub></i> and <i>F<sub>2</sub></i>, are acting in the same direction:</p>
+        <p><b>Resultant Force (F<sub>R</sub>) = F<sub>1</sub> + F<sub>2</sub></b></p>
+        <p>If the forces are acting in opposite directions:</p>
+        <p><b>F<sub>R</sub> = |F<sub>1</sub> - F<sub>2</sub>|</b></p>
+    </div>
+
+    <div class="section example">
+        <h3>Example</h3>
+        <p>If a force of 10 N and another force of 15 N are acting in the same direction, the resultant force is:</p>
+        <p><b>F<sub>R</sub> = 10 N + 15 N = 25 N</b></p>
+        <p>If the forces are acting in opposite directions:</p>
+        <p><b>F<sub>R</sub> = |10 N - 15 N| = 5 N</b></p>
+    </div>
+
+    <!-- Interactive Example: Same/Opposite Direction Forces -->
+    <div class="section interactive">
+        <h3>Interactive Example: Same or Opposite Direction Forces</h3>
+        <p>Enter two forces (in Newtons) and select their direction:</p>
+        <input type="number" id="force1" placeholder="Force 1 (N)">
+        <input type="number" id="force2" placeholder="Force 2 (N)">
+        <select id="direction">
+            <option value="same">Same Direction</option>
+            <option value="opposite">Opposite Direction</option>
+        </select>
+        <button onclick="calculateResultant()">Calculate Resultant Force</button>
+        <p id="result1"></p>
+        
+        <!-- Detailed Solution -->
+        <div id="solution1" class="solution"></div>
+    </div>
+
+    <!-- Interactive Example: Forces at Angles -->
+    <div class="section interactive">
+        <h3>Interactive Example: Vectors Acting at Angles</h3>
+        <p>Enter magnitudes and angle (in degrees) between the forces:</p>
+        <input type="number" id="forceA" placeholder="Force A (N)">
+        <input type="number" id="forceB" placeholder="Force B (N)">
+        <input type="number" id="angle" placeholder="Angle (°)">
+        <button onclick="calculateAngleResultant()">Calculate Resultant Force</button>
+        <p id="result2"></p>
+        
+        <!-- Detailed Solution -->
+        <div id="solution2" class="solution"></div>
+    </div>
+<div class="container">
+  <h2>Understanding Resultant Force with Graphs</h2>
+  
+  <h3>Example 1:</h3>
+  <p>Two forces \( F_1 = 10 \, \text{N} \) and \( F_2 = 15 \, \text{N} \) act at an angle of \( 60^\circ \). Find the magnitude and direction of the resultant force.</p>
+  <div class="solutions">
+    <h4>Solution:</h4>
+    <p>Using the formula:</p>
+    <p>\[
+      R = \sqrt{F_1^2 + F_2^2 + 2 \cdot F_1 \cdot F_2 \cdot \cos(\theta)}
+    \]</p>
+    <p>Substitute \( F_1 = 10 \, \text{N} \), \( F_2 = 15 \, \text{N} \), and \( \theta = 60^\circ \):</p>
+    <p>\[
+      R = \sqrt{10^2 + 15^2 + 2 \cdot 10 \cdot 15 \cdot \cos(60^\circ)} 
+    \]</p>
+    <p>\[
+      R = \sqrt{100 + 225 + 150 \times 0.5}
+    \]</p>
+    <p>\[
+      R = \sqrt{475} \approx 21.79 \, \text{N}
+    \]</p>
+    <p>Direction \( \alpha \):</p>
+    <p>\[
+      \tan(\alpha) = \frac{F_{2y}}{F_{1x} + F_{2x}}, \, \alpha = 36.68^\circ
+    \]</p>
+  </div>
+
+  <h3>Example 2:</h3>
+  <p>Forces \( F_1 = 8 \, \text{N} \), \( F_2 = 12 \, \text{N} \), and angle \( \theta = 45^\circ \).</p>
+  <p>\[
+      R = \sqrt{8^2 + 12^2 + 2 \cdot 8 \cdot 12 \cdot \cos(45^\circ)} 
+  \]</p>
+  <p>Solution: \( R \approx 17.03 \, \text{N} \), Direction: \( \alpha \approx 28.14^\circ \).</p>
+
+  <h3>Example 3:</h3>
+  <p>Forces \( F_1 = 20 \, \text{N} \), \( F_2 = 25 \, \text{N} \), and angle \( \theta = 30^\circ \).</p>
+  <p>\[
+      R = \sqrt{20^2 + 25^2 + 2 \cdot 20 \cdot 25 \cdot \cos(30^\circ)}
+  \]</p>
+  <p>Solution: \( R \approx 42.72 \, \text{N} \), Direction: \( \alpha \approx 33.69^\circ \).</p>
+
+  <h3>Example 4:</h3>
+  <p>Forces \( F_1 = 5 \, \text{N} \), \( F_2 = 10 \, \text{N} \), and angle \( \theta = 90^\circ \).</p>
+  <p>\[
+      R = \sqrt{5^2 + 10^2} = 11.18 \, \text{N}
+  \]</p>
+  <p>Direction: \( \alpha = 63.43^\circ \).</p>
+
+  <h3>Example 5:</h3>
+  <p>Forces \( F_1 = 30 \, \text{N} \), \( F_2 = 35 \, \text{N} \), and angle \( \theta = 120^\circ \).</p>
+  <p>\[
+      R = \sqrt{30^2 + 35^2 + 2 \cdot 30 \cdot 35 \cdot \cos(120^\circ)} 
+  \]</p>
+  <p>Solution: \( R \approx 39.05 \, \text{N} \), Direction: \( \alpha \approx 65.37^\circ \).</p>
+
+</div>
+  <!-- Fixed Blinking "Resultant Force Graph Plotter" Button -->
+  <a href="3.html" class="blinking-button" target="_blank">Resultant Force Graph Plotter</a>
+<script>
+// Calculate resultant force for same or opposite directions
+function calculateResultant() {
+    const force1 = parseFloat(document.getElementById("force1").value);
+    const force2 = parseFloat(document.getElementById("force2").value);
+    const direction = document.getElementById("direction").value;
+    let resultant, solutionText;
+
+    if (direction === "same") {
+        resultant = force1 + force2;
+        solutionText = `
+            <strong>Solution:</strong><br>
+            Forces in the same direction are added together:<br>
+            Resultant Force = Force 1 + Force 2<br>
+            Resultant Force = ${force1} N + ${force2} N<br>
+            Resultant Force = <strong>${resultant.toFixed(2)} N</strong>
+        `;
+    } else {
+        resultant = Math.abs(force1 - force2);
+        solutionText = `
+            <strong>Solution:</strong><br>
+            Forces in opposite directions are subtracted:<br>
+            Resultant Force = |Force 1 - Force 2|<br>
+            Resultant Force = |${force1} N - ${force2} N|<br>
+            Resultant Force = <strong>${resultant.toFixed(2)} N</strong>
+        `;
+    }
+
+    document.getElementById("result1").textContent = `Resultant Force: ${resultant.toFixed(2)} N`;
+    document.getElementById("solution1").innerHTML = solutionText;
+}
+
+// Calculate resultant force for vectors at angles
+function calculateAngleResultant() {
+    const forceA = parseFloat(document.getElementById("forceA").value);
+    const forceB = parseFloat(document.getElementById("forceB").value);
+    const angle = parseFloat(document.getElementById("angle").value);
+
+    // Convert angle to radians
+    const angleRadians = (angle * Math.PI) / 180;
+
+    // Calculate resultant using the law of cosines
+    const resultant = Math.sqrt(
+        Math.pow(forceA, 2) + Math.pow(forceB, 2) -
+        2 * forceA * forceB * Math.cos(angleRadians)
+    );
+
+    const solutionText = `
+        <strong>Solution:</strong><br>
+        Using the law of cosines:<br>
+        Resultant Force (R) = √(ForceA² + ForceB² - 2 * ForceA * ForceB * cos(θ))<br>
+        R = √(${forceA}² + ${forceB}² - 2 * ${forceA} * ${forceB} * cos(${angle}°))<br>
+        R = √(${forceA**2} + ${forceB**2} - 2 * ${forceA} * ${forceB} * ${Math.cos(angleRadians).toFixed(2)})<br>
+        R = <strong>${resultant.toFixed(2)} N</strong>
+    `;
+
+    document.getElementById("result2").textContent = `Resultant Force: ${resultant.toFixed(2)} N`;
+    document.getElementById("solution2").innerHTML = solutionText;
+}
+  function plotGraph() {
+    const canvas = document.getElementById("resultantGraph");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    function drawVector(x, y, angle, length, color) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + length * Math.cos(angle), y - length * Math.sin(angle));
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+    
+    // Example 1: 10N and 15N at 60 degrees
+    const F1 = 10, F2 = 15;
+    const angle = Math.PI / 3;
+    drawVector(300, 300, 0, F1 * 10, 'blue');  // F1
+    drawVector(300 + F1 * 10, 300, angle, F2 * 10, 'red');  // F2
+    drawVector(300, 300, Math.atan(15 * 0.866 / 17.5), 21.79 * 10, 'green');  // Resultant
+    
+    ctx.fillText('F1 = 10N', 310, 295);
+    ctx.fillText('F2 = 15N', 350, 150);
+    ctx.fillText('R ≈ 21.79N', 400, 230);
+  }
+
+  window.onload = plotGraph;
+
+</script>
+</body>
+</html>
