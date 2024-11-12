@@ -3,8 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Explore My Page</title>
+  <meta name="description" content="Explore a range of professional services including Math & Physics Tutoring, Football Scouting, Web Design & ICT Training, and more. Get started today.">
+  <meta name="keywords" content="Math Physics Tutoring, Football Scouting, Web Design, ICT, Online Business, Educational Services, Technology Services">
+  <meta name="author" content="Your Company Name">
+  <meta property="og:title" content="Explore Our Services">
+  <meta property="og:description" content="Explore a variety of educational and business services. Learn more about Math & Physics Tutoring, Football Scouting, Web Design & ICT, and Online Business strategies.">
+  <meta property="og:image" content="https://your-image-link.com/image.jpg">
+  <meta property="og:url" content="https://your-website.com">
+  <title>Explore Our Services | Your Company Name</title>
+  
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
@@ -14,20 +24,24 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f0f4f7;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       flex-direction: column;
       min-height: 100vh;
+      background-image: url('https://your-background-image-link.com/background.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 3em;
       color: #333;
       margin-bottom: 50px;
       text-align: center;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .thumbnail-container {
@@ -36,7 +50,8 @@
       width: 100%;
       flex-wrap: wrap;
       gap: 30px;
-      margin-top: 50px; /* Adjusted spacing */
+      margin-top: 50px;
+      margin-bottom: 30px;
     }
 
     .thumbnail {
@@ -45,7 +60,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column; /* Stack content vertically */
+      flex-direction: column;
       perspective: 1000px;
     }
 
@@ -102,10 +117,8 @@
       color: #333;
       margin-top: 10px;
       text-align: center;
-      padding-top: 10px; /* Space above caption */
     }
 
-    /* Style for the Explore button */
     .explore-btn {
       margin-top: 10px;
       padding: 8px 20px;
@@ -125,7 +138,7 @@
       background-color: #0056b3;
     }
 
-    /* Blinking animation for Explore button */
+    /* Blinking animation */
     @keyframes blink {
       0% {
         opacity: 1;
@@ -142,7 +155,6 @@
       animation: blink 1s infinite;
     }
 
-    /* Mobile Styles */
     @media (max-width: 768px) {
       body {
         justify-content: flex-start;
@@ -168,10 +180,10 @@
 </head>
 <body>
 
-  <h1>Explore Our Services</h1>
+  <h1>Explore Our Professional Services</h1>
 
   <div class="thumbnail-container">
-    <!-- Thumbnail 1 -->
+    <!-- Thumbnail 1: Math & Physics Tutoring -->
     <div class="thumbnail">
       <div class="thumbnail-inner">
         <div class="thumbnail-front">Math & Physics Tutoring</div>
@@ -183,7 +195,7 @@
       <a href="math-physics.html" class="explore-btn">Explore</a>
     </div>
 
-    <!-- Thumbnail 2 -->
+    <!-- Thumbnail 2: Football Scouting -->
     <div class="thumbnail">
       <div class="thumbnail-inner">
         <div class="thumbnail-front">Football Scouting</div>
@@ -195,7 +207,7 @@
       <a href="football-scouting.html" class="explore-btn">Explore</a>
     </div>
 
-    <!-- Thumbnail 3 -->
+    <!-- Thumbnail 3: Web Design & ICT -->
     <div class="thumbnail">
       <div class="thumbnail-inner">
         <div class="thumbnail-front">Web Design & ICT</div>
@@ -207,7 +219,7 @@
       <a href="web-design-ict.html" class="explore-btn">Explore</a>
     </div>
 
-    <!-- Thumbnail 4 -->
+    <!-- Thumbnail 4: Online Business -->
     <div class="thumbnail">
       <div class="thumbnail-inner">
         <div class="thumbnail-front">Online Business</div>
@@ -220,8 +232,22 @@
     </div>
   </div>
 
+  <!-- Footer Section -->
+  <footer>
+    <div style="text-align:center; padding: 20px; background-color: #333; color: #fff;">
+      <p>&copy; 2024 Your Company Name. All Rights Reserved.</p>
+      <p>Follow Us: 
+        <a href="https://facebook.com" target="_blank" style="color: #fff;">Facebook</a> | 
+        <a href="https://twitter.com" target="_blank" style="color: #fff;">Twitter</a> | 
+        <a href="https://linkedin.com" target="_blank" style="color: #fff;">LinkedIn</a>
+      </p>
+      <p>Contact Us: <a href="mailto:info@mathcloud.store" style="color: #fff;">info@mathcloud.store</a></p>
+      <p>Contact Us: <a href="mailto:marshall12340@gmail.com" style="color: #fff;">marshall12340@gmail.com</a></p>
+    </div>
+  </footer>
+
   <script>
-    // Function to generate a random hex color
+    // Random color generator for thumbnail fronts
     function getRandomColor() {
       const letters = '0123456789ABCDEF';
       let color = '#';
@@ -231,10 +257,10 @@
       return color;
     }
 
-    // Assign random colors to the front of each thumbnail
+    // Apply random colors to the front of each thumbnail
     const frontThumbnails = document.querySelectorAll('.thumbnail-front');
     frontThumbnails.forEach(front => {
-      front.style.backgroundColor = getRandomColor(); // Set random background color
+      front.style.backgroundColor = getRandomColor();
     });
   </script>
 
