@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Homepage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f0f4f8;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .circle-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 200px;
+      height: 200px;
+      border: 10px solid #1abc9c;
+      border-radius: 50%;
+      background-color: #fff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .circle-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .explore-btn {
+      margin-top: 30px;
+      padding: 15px 40px;
+      background: linear-gradient(45deg, #1abc9c, #16a085);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .explore-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .circle-container {
+        width: 300px;
+        height: 300px;
+      }
+
+      .explore-btn {
+        padding: 12px 30px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="circle-container">
+    <img src="marshall.webp" alt="Your Image">
+  </div>
+   <p>Marshall Jacob</p>
+   <p>Nigerian ICT Technician</p>
+  <button class="explore-btn" onclick="window.location.href='/explore'">Explore My Page</button>
+
+</body>
+</html>
