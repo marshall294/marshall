@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Available - Orli International Academy</title>
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b); /* Sunset gradient */
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+            color: #fff;
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .message {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeInUp 3s ease-out;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .action-btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #0073e6;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background-color: #005bb5;
+            transform: translateY(-5px);
+        }
+
+        .image-container {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 3s ease-in-out infinite;
+        }
+
+        .error-icon {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            animation: rotateIcon 2s ease-in-out infinite;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotateIcon {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer Styles */
+        .footer {
+            margin-top: 50px;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #fff;
+            animation: fadeInUp 4s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .message {
+                font-size: 1.2rem;
+            }
+            .action-btn {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Error Icon with animation -->
+    <div class="image-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/2581/2581922.png" alt="Error Icon" class="error-icon">
+    </div>
+
+    <!-- Main Message -->
+    <h1>The Page You Are Looking For Is Not Available</h1>
+    <p class="message">
+        Oops! Looks like something went wrong. This page might have been moved, deleted, or you might have typed the URL incorrectly. Don't worry, though, we're here to help!
+    </p>
+
+    <p class="message">
+        Kindly contact your school administrator to resolve the issue. We're always here to support you!
+    </p>
+
+    <!-- Action Button -->
+    <a href="mailto:admin@orliacademy.com" class="action-btn">Contact Support</a>
+
+    <!-- Footer with additional motivational text -->
+    <div class="footer">
+        <p>Keep learning, keep growing, and remember, challenges are just opportunities in disguise!</p>
+    </div>
+
+</body>
+</html>
