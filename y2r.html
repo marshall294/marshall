@@ -138,6 +138,18 @@
                 display: none;
             }
         }
+.upload-link {
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.upload-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
     </style>
 </head>
 <body>
@@ -151,6 +163,7 @@
     <p id="display-word">Loading word...</p>
 
     <div id="resultsSection" class="container"></div>
+<a href="/upload-new-questions" class="upload-link">Already saved or printed the previous results? Click here to upload new questions.</a>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module"></script>
