@@ -203,6 +203,60 @@
     padding: 12px 20px;
   }
 }
+/* General styling for the input field */
+#input-word {
+    width: 100%;
+    max-width: 400px; /* Limit width for larger screens */
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none; /* Remove default outline */
+}
+
+/* Focus and hover effects */
+#input-word:focus {
+    border-color: #007bff; /* Blue border on focus */
+    background-color: #fff; /* White background on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); /* Subtle blue glow around input */
+}
+
+/* Placeholder text styling */
+#input-word::placeholder {
+    color: #aaa; /* Light gray for the placeholder */
+    font-style: italic;
+}
+
+/* Input field hover effect */
+#input-word:hover {
+    border-color: #007bff; /* Change border to blue on hover */
+}
+
+/* Optional: Apply a subtle animation to the input field */
+@keyframes input-focus {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.02); /* Slightly enlarge the input field on focus */
+    }
+}
+
+#input-word:focus {
+    animation: input-focus 0.3s ease-in-out;
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    #input-word {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+}
+
     </style>
 </head>
 <body>
