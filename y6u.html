@@ -65,6 +65,81 @@
             text-align: center;
             margin: 20px 0;
         }
+/* General form styling */
+#uploadForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Styling the file input */
+#excelFile {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fafafa;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hover and focus states for the file input */
+#excelFile:hover, #excelFile:focus {
+    border-color: #007bff;
+    background-color: #f1f1f1;
+    outline: none;
+}
+
+/* Button styling */
+#uploadForm button {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Button hover effects */
+#uploadForm button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Button focus styles */
+#uploadForm button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Optional: Add some text or instructions */
+#uploadForm p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #uploadForm {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    #excelFile, #uploadForm button {
+        width: 100%;
+    }
+}
+
 /* General section styling */
 .upload-section {
   background-color: #f9f9f9;
