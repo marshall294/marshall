@@ -139,10 +139,11 @@
             }
         }
 .upload-link {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: #007bff;
     text-decoration: none;
     transition: color 0.3s ease;
+    position: center;
 }
 
 .upload-link:hover {
@@ -196,7 +197,7 @@ const firebaseConfig = {
             const displayWordElement = document.getElementById('display-word');
             onValue(wordRef, (snapshot) => {
                 const word = snapshot.val();
-                displayWordElement.textContent = word || 'No word available';
+                displayWordElement.textContent = word || 'No questions available';
             });
         }
 
