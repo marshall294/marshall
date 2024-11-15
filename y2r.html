@@ -138,18 +138,48 @@
                 display: none;
             }
         }
-.upload-link {
-    font-size: 1.5rem;
-    color: #007bff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    position: center;
+/* Container for the text and button */
+.link-container {
+    display: flex;
+    justify-content: center;  /* Horizontally centers the content */
+    align-items: center;      /* Vertically aligns the content (optional) */
+    margin-top: 20px;         /* Adds space above the link */
 }
 
-.upload-link:hover {
-    color: #0056b3;
-    text-decoration: underline;
+/* Button styling */
+.upload-btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    margin-left: 10px;  /* Adds space between the text and the button */
 }
+
+/* Hover effect for the button */
+.upload-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Adds lift effect */
+}
+
+/* Focus effect for the button */
+.upload-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Optional: Styling for the surrounding paragraph */
+.link-container p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    text-align: center;
+}
+
 
     </style>
 </head>
@@ -164,7 +194,10 @@
     <p id="display-word">Loading word...</p>
 
     <div id="resultsSection" class="container"></div>
-<a href="/upload-new-questions" class="upload-link">Already saved or printed the previous results? Click here to upload new questions.</a>
+<div class="link-container">
+    <p>Already saved or printed the previous results? <button class="upload-btn" onclick="location.href='/upload-new-questions';">Upload New Questions</button></p>
+</div>
+
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module"></script>
