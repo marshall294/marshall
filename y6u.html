@@ -65,6 +65,81 @@
             text-align: center;
             margin: 20px 0;
         }
+/* General section styling */
+.upload-section {
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 30px auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+.upload-section .section-header h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.upload-section .section-header p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Button container styling */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Button styling */
+.btn {
+  padding: 15px 30px;
+  font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.upload-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.view-btn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+/* Button hover effects */
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.upload-btn:hover {
+  background-color: #0056b3;
+}
+
+.view-btn:hover {
+  background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
     </style>
 </head>
 <body>
@@ -73,7 +148,19 @@
     <div class="logo-container">
         <img src="logo.png" alt="Orli International Academy Logo">
     </div>
-  <input type="text" id="input-word" oninput="updateWord()" placeholder="Type a word">
+    <section id="new-upload-section" class="upload-section">
+  <div class="section-header">
+    <h2>Manage Section B Questions</h2>
+    <p>Upload new questions or view the results of the last uploaded questions.</p>
+  </div>
+
+  <div class="button-container">
+    <a href="/upload-section-b" class="btn upload-btn">Upload Section B Questions</a>
+    <a href="/view-results" class="btn view-btn">View Results of Last Uploaded Questions</a>
+  </div>
+</section>
+
+  <input type="text" id="input-word" oninput="updateWord()" placeholder="Type the subject  here">
     <form id="uploadForm">
         <input type="file" id="excelFile" accept=".xlsx" required>
         <button type="button" onclick="uploadExcel()">Upload</button>
