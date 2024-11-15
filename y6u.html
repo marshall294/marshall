@@ -136,12 +136,7 @@
     <div class="logo-container">
         <img src="logo.png" alt="Orli International Academy Logo">
     </div>
-    <section id="new-upload-section" class="upload-section">
-  <div class="button-container">
-    <a href="/upload-section-b" class="btn upload-btn">Upload Section B Questions</a>
-    <a href="/view-results" class="btn view-btn">View Results of Last Uploaded Questions</a>
-  </div>
-</section>
+
 
   <input type="text" id="input-word" oninput="updateWord()" placeholder="Type the subject  here">
     <form id="uploadForm">
@@ -181,7 +176,12 @@
         </thead>
         <tbody id="uploadedAssessmentsBody"></tbody>
     </table>
-
+    <section id="new-upload-section" class="upload-section">
+  <div class="button-container">
+    <a href="/upload-section-b" class="btn upload-btn">Upload Section B Questions</a>
+    <a href="/view-results" class="btn view-btn">View Results of Last Uploaded Questions</a>
+  </div>
+</section>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
