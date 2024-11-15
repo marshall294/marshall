@@ -138,6 +138,49 @@
                 display: none;
             }
         }
+/* Container for the text and button */
+.link-container {
+    display: flex;
+    justify-content: center;  /* Horizontally centers the content */
+    align-items: center;      /* Vertically aligns the content (optional) */
+    margin-top: 20px;         /* Adds space above the link */
+}
+
+/* Button styling */
+.upload-btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    margin-left: 10px;  /* Adds space between the text and the button */
+}
+
+/* Hover effect for the button */
+.upload-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Adds lift effect */
+}
+
+/* Focus effect for the button */
+.upload-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Optional: Styling for the surrounding paragraph */
+.link-container p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    text-align: center;
+}
+
+
     </style>
 </head>
 <body>
@@ -151,6 +194,10 @@
     <p id="display-word">Loading word...</p>
 
     <div id="resultsSection" class="container"></div>
+<div class="link-container">
+    <p>Already saved or printed the previous results? <button class="upload-btn" onclick="location.href='/y5u';">Upload New Questions</button></p>
+</div>
+
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module"></script>
@@ -183,7 +230,7 @@ const firebaseConfig = {
             const displayWordElement = document.getElementById('display-word');
             onValue(wordRef, (snapshot) => {
                 const word = snapshot.val();
-                displayWordElement.textContent = word || 'No word available';
+                displayWordElement.textContent = word || 'No questions available';
             });
         }
 
