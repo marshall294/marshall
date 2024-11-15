@@ -129,8 +129,7 @@
     <!-- Completion Section -->
     <div class="exam-completion-section">
         <p>Once you have answered all the questions in this section, click the button below to submit your responses.</p>
-        <p><strong>Good luck!</strong> Your teacher will review your examination and send your scores to you shortly. Thank you for completing the exam.</p>
-        <button class="submit-button" onclick="submitExam()">Submit Exam</button>
+        <button class="submit-button" onclick="submitExam()">Exit</button>
     </div>
 <footer>
     Orli International Academy | All rights reserved | 2024
@@ -202,10 +201,10 @@ window.onload = function() {
 };
         function submitExam() {
             // Logic to handle exam submission (e.g., saving the answers, sending data to the server, etc.)
-            alert('Thank you for completing the exam! Your responses have been submitted.');
+            alert('Good luck! Your teacher will review your examination and send your scores to you shortly. Thank you for completing the exam.');
 
-            // Redirect to the next page (5.html)
-            window.location.href = '/5';  // This will redirect the user to 5.html
+            // Redirect to the next page (2.html)
+            window.location.href = '/ex';  // This will redirect the user to 2.html
         }
 </script>
 
