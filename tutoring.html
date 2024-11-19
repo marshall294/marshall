@@ -207,10 +207,6 @@
             }
         }
     </style>
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
 </head>
 <body>
 
@@ -259,17 +255,17 @@
         <div class="form-group">
             <label for="service" style="color: #333;">Select Service</label>
             <select id="service" name="service" required>
-                <option value="Homework Help">Homework Help</option>
-                <option value="Project Assistance">Project Assistance</option>
-                <option value="Online Tutoring">Online Tutoring</option>
-                <option value="IGCSE Prep">IGCSE Prep</option>
-                <option value="AS & A-Level Prep">AS & A-Level Prep</option>
-                <option value="UK University Prep">UK University Prep</option>
+                <option value="homeworkHelp">Homework Help</option>
+                <option value="projectAssistance">Project Assistance</option>
+                <option value="onlineTutoring">Online Tutoring</option>
+                <option value="igcsePrep">IGCSE Prep</option>
+                <option value="asALevelPrep">AS & A-Level Prep</option>
+                <option value="ukUniversityPrep">UK University Prep</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="message" style="color: #333;">Message/Details</label>
+            <label for="message" style="color: #333;">Your Message</label>
             <textarea id="message" name="message" required></textarea>
         </div>
 
@@ -285,42 +281,45 @@
     </form>
 </section>
 
-<!-- Testimonial Section -->
-<section class="testimonial-section">
-    <h3>What Our Students Say</h3>
-    <div class="testimonial-cards">
-        <div class="testimonial-card">
-            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Student Photo">
-            <p>"MathCloud has been a game-changer for my IGCSE preparations. The tutors are so knowledgeable and really care about my progress!"</p>
-            <h4>John D.</h4>
-            <span>Manchester, UK</span>
-        </div>
-        <div class="testimonial-card">
-            <img src="https://randomuser.me/api/portraits/men/16.jpg" alt="Student Photo">
-            <p>"I was struggling with A-Level Physics, but after just a few weeks with MathCloud, my grades improved dramatically!"</p>
-            <h4>Emily W.</h4>
-            <span>London, UK</span>
-        </div>
-        <div class="testimonial-card">
-            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Student Photo">
-            <p>"The personalized sessions really helped me tackle my weak areas in Maths. Highly recommend MathCloud!"</p>
-            <h4>Sarah H.</h4>
-            <span>Bristol, UK</span>
-        </div>
-        <div class="testimonial-card">
-            <img src="https://randomuser.me/api/portraits/men/31.jpg" alt="Student Photo">
-            <p>"MathCloud’s online tutoring is top-notch! I can now confidently approach my university prep with their expert help."</p>
-            <h4>Michael F.</h4>
-            <span>Oxford, UK</span>
-        </div>
-    </div>
-</section>
+<p>Page views: <span id="viewCount">Loading...</span></p>
 
 <footer>
     <p>Contact us at: <a href="mailto:marshall12340@gmail.com">marshall12340@gmail.com</a> | WhatsApp: <a href="https://wa.me/+2348102341648">+2348102341648</a></p>
 </footer>
 
-<script>
+<script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCGEphhLAPg2hH7N3bNwBKQVzdu5VgzKQQ",
+        authDomain: "year6-477dd.firebaseapp.com",
+        projectId: "year6-477dd",
+        storageBucket: "year6-477dd.firebasestorage.app",
+        messagingSenderId: "115928739324",
+        appId: "1:115928739324:web:c9995db657e4a94fc39679"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const pageViewsRef = ref(db, 'page_views/sepa_tournament');
+
+    // Get the current page view count from the database
+    get(pageViewsRef).then(snapshot => {
+        let currentValue = snapshot.exists() ? snapshot.val() : 0; // If no data, default to 0
+
+        // Increment the page view count and update it in the database
+        set(pageViewsRef, currentValue + 1);
+
+        // Update the view count displayed on the page
+        document.getElementById('viewCount').textContent = currentValue + 1;
+    }).catch(error => {
+        console.error("Error fetching page views: ", error);
+    });
+
     // Handle form submission
     document.getElementById('serviceForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -339,15 +338,6 @@
             const emailUrl = `mailto:marshall12340@gmail.com?subject=MathCloud Tutorial Service Subscription&body=${encodeURIComponent(contactMessage)}`;
             window.location.href = emailUrl;
         }
-    });
-
-    // Add event listeners to service options for automatic selection in the form
-    const serviceOptions = document.querySelectorAll('.service-option');
-    serviceOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            const service = option.querySelector('h3').textContent;
-            document.getElementById('service').value = service;
-        });
     });
 </script>
 
