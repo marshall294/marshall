@@ -119,15 +119,71 @@
             font-weight: bold;
         }
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .feedback-form {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-form h3 {
+            color: #2d3e50;
+        }
+
+        .feedback-form textarea {
+            height: 100px;
+            border: 1px solid #ccc;
+        }
+
+        .testimonial-section {
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .testimonial-section h3 {
+            font-size: 30px;
+            color: #2d3e50;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-cards {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            width: 23%;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .testimonial-card img {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-card p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .testimonial-card h4 {
+            font-size: 18px;
+            color: #2d3e50;
+            margin-top: 10px;
+        }
+
+        .testimonial-card span {
+            color: #888;
+            font-size: 14px;
         }
 
         @media (max-width: 768px) {
@@ -135,14 +191,26 @@
                 width: 45%;
                 margin-bottom: 20px;
             }
+
+            .testimonial-card {
+                width: 48%;
+            }
         }
 
         @media (max-width: 480px) {
             .service-option {
                 width: 100%;
             }
+
+            .testimonial-card {
+                width: 100%;
+            }
         }
     </style>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
 </head>
 <body>
 
@@ -215,6 +283,37 @@
 
         <button type="submit" class="submit-btn">Subscribe Now</button>
     </form>
+</section>
+
+<!-- Testimonial Section -->
+<section class="testimonial-section">
+    <h3>What Our Students Say</h3>
+    <div class="testimonial-cards">
+        <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Student Photo">
+            <p>"MathCloud has been a game-changer for my IGCSE preparations. The tutors are so knowledgeable and really care about my progress!"</p>
+            <h4>John D.</h4>
+            <span>Manchester, UK</span>
+        </div>
+        <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/men/16.jpg" alt="Student Photo">
+            <p>"I was struggling with A-Level Physics, but after just a few weeks with MathCloud, my grades improved dramatically!"</p>
+            <h4>Emily W.</h4>
+            <span>London, UK</span>
+        </div>
+        <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Student Photo">
+            <p>"The personalized sessions really helped me tackle my weak areas in Maths. Highly recommend MathCloud!"</p>
+            <h4>Sarah H.</h4>
+            <span>Bristol, UK</span>
+        </div>
+        <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/men/31.jpg" alt="Student Photo">
+            <p>"MathCloud’s online tutoring is top-notch! I can now confidently approach my university prep with their expert help."</p>
+            <h4>Michael F.</h4>
+            <span>Oxford, UK</span>
+        </div>
+    </div>
 </section>
 
 <footer>
