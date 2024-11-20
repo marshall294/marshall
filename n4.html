@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orli International Academy - year 4 Notes</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1, h2 {
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+        }
+        h1 {
+            font-size: 2.6rem;
+            color: #FFD700; /* Gold Color */
+            font-family: 'Trebuchet MS', sans-serif;
+            letter-spacing: 2px;
+        }
+        h11 {
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+        }
+        h11 {
+            font-size: 2.6rem;
+            color: black;
+            font-family: 'Trebuchet MS', sans-serif;
+            letter-spacing: 2px;
+        }
+.centered-text {
+    display: flex;
+    justify-content: center;  /* Centers content horizontally */
+    align-items: center;      /* Centers content vertically */
+    font-size: 1.2rem;
+}
+
+        h2 {
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+        /* 3D Text Effect */
+        .date-time, .school-motto {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+        }
+        .school-motto {
+            font-size: 1.6rem;
+            animation: animateMotto 3s infinite alternate;
+        }
+
+        @keyframes animateMotto {
+            0% { color: #FFD700; transform: scale(1); }
+            25% { color: #FF6347; transform: scale(1.05); }
+            50% { color: #ADFF2F; transform: rotate(-3deg); }
+            75% { color: #7B68EE; transform: scale(1.1); }
+            100% { color: #FFD700; transform: rotate(3deg); }
+        }
+
+        /* Thumbnails for Classes */
+        .class-thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0;
+        }
+        .thumbnail {
+            width: 160px;
+            height: 160px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .thumbnail:hover {
+            transform: translateY(-10px);
+        }
+        .thumbnail h3 {
+            font-size: 1.5rem;
+            color: #0073e6;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Logo */
+        .logo-container {
+            margin: 10px auto;
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .logo-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .thumbnail {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <img src="logo.png" alt="Orli International Academy Logo">
+        </div>
+
+        <!-- Main Title -->
+        <h1>Orli International Academy</h1>
+
+        <!-- Date and Time Display -->
+        <div class="date-time" id="dateTime">Loading Date & Time...</div>
+        <h11>YEAR 4 STUDENTS NOTES</h11>
+
+        <!-- School Motto with Animation -->
+        <div class="school-motto">Raising a well-informed child</div>
+<div class="centered-text">
+    <p>Click on the subject thumbnail to access your lesson notes. If you don't have it, please ask your class teacher.</p>
+</div>
+
+
+        <!-- Class Thumbnails -->
+        <div class="class-thumbnails">
+            <div class="thumbnail" onclick="navigateToClass('/n4m')">
+                <h3>Mathematics</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4en')">
+                <h3>English Language</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4s')">
+                <h3>Science</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4a')">
+                <h3>Agric</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4ec')">
+                <h3>Home Economics</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4h')">
+                <h3>History</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4cv')">
+                <h3>Civic Education</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4g')">
+                <h3>Geography</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4p')">
+                <h3>PSHE</h3>
+            </div>
+            <div class="thumbnail" onclick="navigateToClass('/n4i')">
+                <h3>ICT</h3>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to display current date and time
+        function updateDateTime() {
+            const now = new Date();
+            const dateTime = now.toLocaleString();
+            document.getElementById('dateTime').innerText = dateTime;
+        }
+        setInterval(updateDateTime, 1000);
+
+        // Navigation Function for Class Thumbnails
+        function navigateToClass(className) {
+            window.location.href = `${className}.html`; // Redirect to the respective class page
+        }
+    </script>
+</body>
+</html>
