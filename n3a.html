@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students Notes - ORLI International Academy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: #0056b3;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            border: 4px solid white;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        header img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin: 10px 0;
+        }
+        header p {
+            font-size: 1.2em;
+            font-style: italic;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .notes-frame {
+            margin: 20px 0;
+            width: 100%;
+            height: 80vh;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="ORLI International Academy Logo">
+        </div>
+        <h1>ORLI International Academy</h1>
+        <p>"Raising a Well-Informed Child"</p>
+    </header>
+    <div class="container">
+        <h2>Year 3 agricultural Science Notes</h2>
+        <p>
+            Below are the notes for your studies. Please refer to the PDF embedded in the frame. You can scroll, zoom, and navigate within the document directly.
+        </p>
+        <iframe 
+            class="notes-frame" 
+            src="path-to-your-notes.pdf" 
+            title="Students Notes"
+            frameborder="0">
+            Your browser does not support PDFs. Please <a href="path-to-your-notes.pdf">click here to download the notes</a>.
+        </iframe>
+    </div>
+    <footer>
+        <p>&copy; 2024 ORLI International Academy. All rights reserved.</p>
+        <p>Designed with care and dedication.</p>
+    </footer>
+</body>
+</html>
