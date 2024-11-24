@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .welcome-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+            max-width: 80%;
+        }
+        .home-page {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: perspective(100px) rotateX(0) rotateY(0);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .thumbnail:hover {
+            transform: perspective(100px) rotateX(-5deg) rotateY(5deg);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .thumbnail.selected {
+            background-color: #4caf50;
+            color: white;
+        }
+        .question-page {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .back-button, .reveal-button, .end-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .back-button:hover, .reveal-button:hover, .end-button:hover {
+            background-color: #45a049;
+        }
+        .answer-text {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Quiz Challenge
+    </header>
+    <div class="welcome-message">
+        Welcome to the Quiz Challenge! Click on a number to answer its corresponding question. Reveal the answer and then return to the main page to try another. Click "End Quiz" to reset your progress.
+    </div>
+    <div id="home-page" class="home-page">
+        <!-- Thumbnails will be generated here -->
+    </div>
+    <div id="question-page" class="question-page">
+        <h1 id="question-text">Question</h1>
+        <p id="answer-text" class="answer-text">Answer</p>
+        <button class="reveal-button" onclick="revealAnswer()">Reveal Answer</button>
+        <button class="back-button" onclick="goBack()">Back to Home</button>
+    </div>
+    <button class="end-button" onclick="endQuiz()">End Quiz</button>
+
+    <script>
+const questions = [
+    // Esther
+    "Who was the king during the story of Esther?",
+    "What was Queen Esther's original Hebrew name?",
+    "Who was the king's first queen who was deposed?",
+    "What relation was Mordecai to Esther?",
+    "What did Haman plan to do to the Jewish people?",
+    "How did Mordecai learn about Haman's plot?",
+    "What did Esther risk to approach the king?",
+    "What did Esther request of the king during the first banquet?",
+    "How many days did Esther and the Jews fast before she approached the king?",
+    "What did the king do when Esther approached him in the throne room?",
+    "How was Haman punished?",
+    "What did the king issue to counter Haman's decree?",
+    "What is the Jewish festival that celebrates the events in Esther?",
+    "What role did Mordecai take after Haman's downfall?",
+    "What was Haman's wife’s name?",
+    "What was the name of the gallows Haman built for Mordecai?",
+    "How many provinces did King Xerxes rule?",
+    "How did Mordecai save the king's life earlier in the story?",
+    "What did the king do to honor Mordecai for saving his life?",
+    "What advice did Haman's wife give after Mordecai was honored?",
+    "Why did Esther not reveal her Jewish identity at first?",
+    "How did Haman determine the date for his plan to destroy the Jews?",
+    "Who advised Haman to build the gallows for Mordecai?",
+    "What did Esther host to expose Haman’s plot?",
+    "How did the Jews defend themselves when the decree was countered?",
+
+    // Exodus
+    "What was the name of the mountain where Moses saw the burning bush?",
+    "What was Moses' reaction when God called him to lead the Israelites?",
+    "Who was Moses' sister?",
+    "What did God turn Moses' staff into as a sign?",
+    "How did God first speak to Moses?",
+    "What was the first plague in Egypt?",
+    "How did Pharaoh react to the first few plagues?",
+    "What did God instruct the Israelites to do with lamb's blood during Passover?",
+    "How did God lead the Israelites by night in the wilderness?",
+    "What did Moses do to part the Red Sea?",
+    "What was the bread-like food called that fell from heaven?",
+    "What did the Israelites complain about in the wilderness?",
+    "What happened when Moses struck a rock at God's command?",
+    "What was written on the tablets Moses received on Mount Sinai?",
+    "What did Aaron do while Moses was on Mount Sinai?",
+    "What did the Israelites build to worship during Moses' absence?",
+    "How long did Moses stay on Mount Sinai?",
+    "What did Moses do when he saw the Israelites worshiping the golden calf?",
+    "What was the punishment for worshiping the golden calf?",
+    "What was placed in the Ark of the Covenant?",
+    "Who helped Moses hold up his arms during the battle with Amalek?",
+    "How many spies were sent into Canaan by Moses?",
+    "Who among the spies encouraged the Israelites to trust God?",
+    "What did God give the Israelites to drink in the wilderness?",
+    "Who was Moses' father-in-law?"
+];
+
+const answers = [
+    // Esther
+    "King Xerxes (Ahasuerus)",
+    "Hadassah",
+    "Queen Vashti",
+    "Her cousin (and guardian)",
+    "Exterminate them",
+    "Mordecai overheard the plot",
+    "Her life; approaching the king without being summoned could result in death",
+    "For the king and Haman to attend a banquet she prepared",
+    "Three days",
+    "Held out his golden scepter to her",
+    "Hanged on the gallows he built for Mordecai",
+    "Allowed the Jews to defend themselves",
+    "Purim",
+    "Second in rank to King Xerxes",
+    "Zeresh",
+    "A tall wooden structure, 50 cubits high",
+    "127 provinces",
+    "He exposed a plot to assassinate the king",
+    "He was paraded through the city on the king's horse",
+    "That he would not prevail over Mordecai",
+    "Mordecai advised her not to reveal it initially",
+    "By casting lots (Pur)",
+    "His wife and friends",
+    "A second banquet",
+    "They defended themselves against their attackers",
+
+    // Exodus
+    "Mount Horeb (also known as Mount Sinai)",
+    "He doubted his ability and asked God to send someone else",
+    "Miriam",
+    "A snake",
+    "Through the burning bush",
+    "Turning water into blood",
+    "He hardened his heart and refused to let the Israelites go",
+    "Smear it on their doorposts to avoid the death of the firstborn",
+    "A pillar of fire",
+    "Raised his staff and stretched out his hand over the sea",
+    "Manna",
+    "They complained about hunger and thirst",
+    "Water flowed out of the rock",
+    "The Ten Commandments",
+    "He made a golden calf for the Israelites to worship",
+    "A golden calf",
+    "Forty days and forty nights",
+    "He broke the stone tablets in anger",
+    "About 3,000 people were put to death",
+    "The stone tablets, Aaron's staff, and a jar of manna",
+    "Aaron and Hur",
+    "Twelve spies",
+    "Caleb and Joshua",
+    "Water from a rock",
+    "Jethro"
+];
+
+
+        // Fill missing questions and answers with default text if less than 50
+        while (questions.length < 50) {
+            questions.push(`Default question for thumbnail ${questions.length + 1}`);
+            answers.push(`Default answer for thumbnail ${answers.length + 1}`);
+        }
+
+        const homePage = document.getElementById('home-page');
+        const questionPage = document.getElementById('question-page');
+        const questionText = document.getElementById('question-text');
+        const answerText = document.getElementById('answer-text');
+        const thumbnails = [];
+
+        let currentQuestionIndex = null;
+
+        // Load progress from localStorage
+        const selectedThumbnails = JSON.parse(localStorage.getItem('selectedThumbnails')) || [];
+
+        // Generate thumbnails
+        for (let i = 1; i <= 50; i++) {
+            const thumbnail = document.createElement('div');
+            thumbnail.className = 'thumbnail';
+            thumbnail.textContent = i;
+
+            // If previously selected, mark as selected
+            if (selectedThumbnails.includes(i)) {
+                thumbnail.classList.add('selected');
+            }
+
+            thumbnail.onclick = () => showQuestion(i, thumbnail);
+            thumbnails.push(thumbnail);
+            homePage.appendChild(thumbnail);
+        }
+
+        // Show the question page
+        function showQuestion(number, thumbnail) {
+            homePage.style.display = 'none';
+            questionPage.style.display = 'block';
+            currentQuestionIndex = number - 1; // Store current question index
+            questionText.textContent = questions[currentQuestionIndex];
+            answerText.style.display = 'none'; // Hide the answer initially
+
+            if (!selectedThumbnails.includes(number)) {
+                selectedThumbnails.push(number);
+                thumbnail.classList.add('selected');
+                saveProgress();
+            }
+        }
+
+        // Reveal the answer
+        function revealAnswer() {
+            answerText.textContent = answers[currentQuestionIndex];
+            answerText.style.display = 'block'; // Show the answer
+        }
+
+        // Go back to the home page
+        function goBack() {
+            homePage.style.display = 'grid';
+            questionPage.style.display = 'none';
+        }
+
+        // Save selected thumbnails to localStorage
+        function saveProgress() {
+            localStorage.setItem('selectedThumbnails', JSON.stringify(selectedThumbnails));
+        }
+
+        // End quiz and clear localStorage
+        function endQuiz() {
+            localStorage.removeItem('selectedThumbnails');
+            location.reload(); // Refresh the page to reset state
+        }
+    </script>
+</body>
+</html>

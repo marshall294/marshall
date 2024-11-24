@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .home-page {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .thumbnail.selected {
+            background-color: #4caf50;
+            color: white;
+        }
+        .question-page {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .back-button, .reveal-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .back-button:hover, .reveal-button:hover {
+            background-color: #45a049;
+        }
+        .answer-text {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Quiz Challenge
+    </header>
+    <div id="home-page" class="home-page">
+        <!-- Thumbnails will be generated here -->
+    </div>
+    <div id="question-page" class="question-page">
+        <h1 id="question-text">Question</h1>
+        <p id="answer-text" class="answer-text">Answer</p>
+        <button class="reveal-button" onclick="revealAnswer()">Reveal Answer</button>
+        <button class="back-button" onclick="goBack()">Back to Home</button>
+    </div>
+
+    <script>
+        const questions = [
+            "What is 2 + 2?",
+            "What is the capital of France?",
+            "Who wrote 'To Kill a Mockingbird'?",
+            "What is the chemical symbol for water?",
+            "What is the largest planet in the Solar System?",
+            // Add up to 50 questions as needed.
+        ];
+
+        const answers = [
+            "4",
+            "Paris",
+            "Harper Lee",
+            "H2O",
+            "Jupiter",
+            // Add up to 50 answers as needed.
+        ];
+
+        // Fill missing questions and answers with default text if less than 50
+        while (questions.length < 50) {
+            questions.push(`Default question for thumbnail ${questions.length + 1}`);
+            answers.push(`Default answer for thumbnail ${answers.length + 1}`);
+        }
+
+        const homePage = document.getElementById('home-page');
+        const questionPage = document.getElementById('question-page');
+        const questionText = document.getElementById('question-text');
+        const answerText = document.getElementById('answer-text');
+        const thumbnails = [];
+
+        let currentQuestionIndex = null;
+
+        // Generate thumbnails
+        for (let i = 1; i <= 50; i++) {
+            const thumbnail = document.createElement('div');
+            thumbnail.className = 'thumbnail';
+            thumbnail.textContent = i;
+            thumbnail.onclick = () => showQuestion(i, thumbnail);
+            thumbnails.push(thumbnail);
+            homePage.appendChild(thumbnail);
+        }
+
+        // Show the question page
+        function showQuestion(number, thumbnail) {
+            homePage.style.display = 'none';
+            questionPage.style.display = 'block';
+            currentQuestionIndex = number - 1; // Store current question index
+            questionText.textContent = questions[currentQuestionIndex];
+            answerText.style.display = 'none'; // Hide the answer initially
+            thumbnail.classList.add('selected');
+        }
+
+        // Reveal the answer
+        function revealAnswer() {
+            answerText.textContent = answers[currentQuestionIndex];
+            answerText.style.display = 'block'; // Show the answer
+        }
+
+        // Go back to the home page
+        function goBack() {
+            homePage.style.display = 'grid';
+            questionPage.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
