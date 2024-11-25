@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orli International Academy</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #FFD700; /* Gold color */
+            font-family: 'Trebuchet MS', sans-serif;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .start-button {
+            display: inline-block;
+            background-color: #0073e6;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: #005bb5;
+            transform: translateY(-5px);
+        }
+
+        .password-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .password-section input {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 2px solid #0073e6;
+            width: 250px;
+        }
+
+        .password-section button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .start-button {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+            .password-section input {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enterance Examination</h1>
+        <h2>Orli International Academy</h2>
+
+        <!-- Password Section -->
+        <div class="password-section">
+            <p>Please enter the class password to access today's examination:</p>
+            <input type="password" id="password" placeholder="Enter password" />
+            <button onclick="verifyPassword()">Submit</button>
+        </div>
+
+        <!-- Start Examination Button (Initially hidden) -->
+        <a href="/112" class="start-button" id="startButton" style="display: none;">Start Today's Examination</a>
+
+        <div class="footer">
+            <p>We wish you the best of luck, and remember that you can always ask your teacher for assistance if needed!</p>
+        </div>
+    </div>
+
+    <script>
+        // Password Verification Function
+        function verifyPassword() {
+            const enteredPassword = document.getElementById('password').value;
+            const correctPassword = 'year112';
+
+            if (enteredPassword === correctPassword) {
+                // Show the Start button if the password is correct
+                document.getElementById('startButton').style.display = 'inline-block';
+                alert('Password correct! You may now start the examination.');
+            } else {
+                // Show an error if the password is incorrect
+                alert('Incorrect password. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
