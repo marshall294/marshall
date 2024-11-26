@@ -12,6 +12,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            background-color: #f7f7f7;
         }
         header {
             width: 100%;
@@ -33,46 +34,29 @@
             text-align: center;
             max-width: 80%;
         }
-        .home-page {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-            width: 90%;
-            max-width: 800px;
-        }
-        .thumbnail {
-            width: 80%;
-            padding-top: 40%; /* This ensures it's square */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            cursor: pointer;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transform: perspective(100px) rotateX(0) rotateY(0);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            font-size: 1.5rem;
-            text-align: center;
-        }
-        .thumbnail:hover {
-            transform: perspective(100px) rotateX(-5deg) rotateY(5deg);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-        .thumbnail.selected {
-            background-color: #4caf50;
-            color: white;
-        }
         .question-page {
             display: none;
             text-align: center;
             margin-top: 50px;
+            max-width: 800px;
+            width: 90%;
         }
-        .back-button, .reveal-button, .end-button {
+        #question-text {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .answer-text {
             margin-top: 20px;
-            margin-bottom: 40px;
+            font-weight: bold;
+            color: #333;
+            display: none;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .button {
             padding: 12px 25px;
             background-color: #4caf50;
             color: white;
@@ -80,194 +64,162 @@
             cursor: pointer;
             border-radius: 5px;
             font-size: 1rem;
+            transition: background-color 0.3s;
         }
-        .back-button:hover, .reveal-button:hover, .end-button:hover {
+        .button:hover {
             background-color: #45a049;
         }
-        .answer-text {
+        .progress-bar {
+            width: 80%;
+            height: 10px;
+            background-color: #f0f0f0;
             margin-top: 20px;
-            font-weight: bold;
-            color: #333;
-            display: none; /* Initially hidden */
+            border-radius: 5px;
         }
-
+        .progress-bar-filled {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0%;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
         /* Media Queries for responsiveness */
         @media (max-width: 768px) {
             header {
                 font-size: 1.5rem;
             }
-            .home-page {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .thumbnail {
-                font-size: 1.2rem;
-            }
-            .back-button, .reveal-button, .end-button {
-                padding: 10px 20px;
+            .button {
                 font-size: 0.9rem;
+                padding: 10px 20px;
             }
         }
         @media (max-width: 480px) {
             header {
                 font-size: 1.2rem;
             }
-            .home-page {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .thumbnail {
-                font-size: 1rem;
-            }
-            .back-button, .reveal-button, .end-button {
-                padding: 8px 15px;
+            .button {
                 font-size: 0.8rem;
+                padding: 8px 15px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Background music -->
+    <audio id="background-music" loop>
+        <source src="quiz-evaluation-loop-thinking-time-231582.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <header>
         English Quiz
     </header>
-    <div class="welcome-message"> Welcome to the English Language Quiz!</div>
-    <div id="home-page" class="home-page">
-        <!-- Thumbnails will be generated here -->
-    </div>
+    <div class="welcome-message"> Welcome to the English Language Quiz! </div>
     <div id="question-page" class="question-page">
         <h1 id="question-text">Question</h1>
         <p id="answer-text" class="answer-text">Answer</p>
-        <button class="reveal-button" onclick="revealAnswer()">Reveal Answer</button>
-        <button class="back-button" onclick="goBack()">Back to Home</button>
+        <div class="button-container">
+            <button class="button" id="next-button" onclick="nextQuestion()">Next</button>
+            <button class="button" id="reveal-button" onclick="revealAnswer()">Reveal Answer</button>
+            <button class="button" id="back-button" onclick="goBack()">Back to Home</button>
+        </div>
+        <div class="progress-bar">
+            <div id="progress-bar-filled" class="progress-bar-filled"></div>
+        </div>
     </div>
-    <button class="end-button" onclick="endQuiz()">End Quiz</button>
-  <a href="/quizmaster" class="end-button">Go to HOME</a>
+    <button class="button" id="start-quiz" onclick="startQuiz()">Start Quiz</button>
+
 <script>
 const questions = [
-    "What is the synonym of 'happy'?",
-    "Which word is an antonym of 'easy'?",
-    "What is the plural form of 'child'?",
-    "What is a noun?",
-    "Identify the verb in this sentence: 'She runs fast.'",
-    "What is the past tense of 'eat'?",
-    "Choose the correct preposition: 'She is good ____ singing.'",
-    "Which word is an adjective in the sentence: 'The bright sun shone brightly.'?",
-    "What is the meaning of the idiom 'break the ice'?",
-    "What is the opposite of 'beautiful'?",
-    "Choose the correct form: 'I ____ to the store yesterday.'",
-    "Which word is a conjunction in the sentence: 'I wanted to go, but it was too late.'?",
-    "Which of the following is a compound word: 'notebook', 'happy', or 'write'?",
-    "What does the word 'courage' mean?",
-    "Identify the subject in the sentence: 'The cat slept on the mat.'",
-    "What is the comparative form of 'good'?",
-    "Which of these is a proper noun: 'city', 'dog', or 'London'?",
-    "What is the plural of 'man'?",
-    "What is a synonym for 'difficult'?",
-    "Which sentence is a question?"
+    "What is the synonym of 'happy'?", "Which word is an antonym of 'easy'?", "What is the plural form of 'child'?",
+    "What is a noun?", "Identify the verb in this sentence: 'She runs fast.'", "What is the past tense of 'eat'?",
+    "Choose the correct preposition: 'She is good ____ singing.'", "Which word is an adjective in the sentence: 'The bright sun shone brightly.'?",
+    "What is the meaning of the idiom 'break the ice'?", "What is the opposite of 'beautiful'?", "Choose the correct form: 'I ____ to the store yesterday.'",
+    "Which word is a conjunction in the sentence: 'I wanted to go, but it was too late.'?", "Which of the following is a compound word: 'notebook', 'happy', or 'write'?",
+    "What does the word 'courage' mean?", "Identify the subject in the sentence: 'The cat slept on the mat.'", "What is the comparative form of 'good'?",
+    "Which of these is a proper noun: 'city', 'dog', or 'London'?", "What is the plural of 'man'?", "What is a synonym for 'difficult'?", "Which sentence is a question?"
 ];
 
 const answers = [
-    "Joyful",
-    "Hard",
-    "Children",
-    "A person, place, thing, or idea.",
-    "Runs",
-    "Ate",
-    "At",
-    "Bright",
-    "To start a conversation or activity.",
-    "Ugly",
-    "Went",
-    "But",
-    "Notebook",
-    "Bravery",
-    "The cat",
-    "Better",
-    "London",
-    "Men",
-    "Challenging",
-    "What is your name?"
+    "Joyful", "Hard", "Children", "A person, place, thing, or idea.", "Runs", "Ate", "At", "Bright",
+    "To start a conversation or activity.", "Ugly", "Went", "But", "Notebook", "Bravery", "The cat", "Better",
+    "London", "Men", "Challenging", "What is your name?"
 ];
 
+let currentQuestionIndex = 0;
 
-    const homePage = document.getElementById('home-page');
-    const questionPage = document.getElementById('question-page');
-    const questionText = document.getElementById('question-text');
-    const answerText = document.getElementById('answer-text');
-    const thumbnails = [];
+const startQuizButton = document.getElementById('start-quiz');
+const questionPage = document.getElementById('question-page');
+const questionText = document.getElementById('question-text');
+const answerText = document.getElementById('answer-text');
+const nextButton = document.getElementById('next-button');
+const revealButton = document.getElementById('reveal-button');
+const backButton = document.getElementById('back-button');
+const progressBarFilled = document.getElementById('progress-bar-filled');
 
-    let currentQuestionIndex = null;
+function startQuiz() {
+    startQuizButton.style.display = 'none'; // Hide start button
+    questionPage.style.display = 'block'; // Show quiz page
+    loadQuestion(); // Load the first question
+    updateProgressBar();
+}
 
-    // Load progress from localStorage
-    const selectedThumbnails = JSON.parse(localStorage.getItem('selectedThumbnails')) || [];
-
-    // Generate thumbnails for 20 questions
-    for (let i = 1; i <= 20; i++) {
-        const thumbnail = document.createElement('div');
-        thumbnail.className = 'thumbnail';
-        thumbnail.textContent = i;
-
-        // If previously selected, mark as selected
-        if (selectedThumbnails.includes(i)) {
-            thumbnail.classList.add('selected');
-        }
-
-        thumbnail.onclick = () => showQuestion(i, thumbnail);
-        thumbnails.push(thumbnail);
-        homePage.appendChild(thumbnail);
+function loadQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+        alert('You have completed the quiz!');
+        goBack();
+        return;
     }
+    questionText.textContent = questions[currentQuestionIndex];
+    answerText.style.display = 'none';
+    
+    // Read the question aloud
+    speakText(`Question: ${questions[currentQuestionIndex]}`);
+}
 
-    // Show the question page
-    function showQuestion(number, thumbnail) {
-        homePage.style.display = 'none';
-        questionPage.style.display = 'block';
-        currentQuestionIndex = number - 1; // Store current question index
-        questionText.textContent = questions[currentQuestionIndex];
-        answerText.style.display = 'none'; // Hide the answer initially
+function revealAnswer() {
+    answerText.textContent = answers[currentQuestionIndex];
+    answerText.style.display = 'block';
+    
+    // Read the answer aloud
+    speakText(`Answer: ${answers[currentQuestionIndex]}`);
+}
 
-        if (!selectedThumbnails.includes(number)) {
-            selectedThumbnails.push(number);
-            thumbnail.classList.add('selected');
-            saveProgress();
-        }
+function nextQuestion() {
+    currentQuestionIndex++;
+    loadQuestion();
+    updateProgressBar();
+}
 
-        // Speak the question
-        speakText(`Question: ${questions[currentQuestionIndex]}`);
+function goBack() {
+    startQuizButton.style.display = 'block';
+    questionPage.style.display = 'none';
+    currentQuestionIndex = 0;
+    updateProgressBar();
+}
+
+function updateProgressBar() {
+    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+    progressBarFilled.style.width = `${progress}%`;
+}
+
+function speakText(text) {
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(utterance);
+    } else {
+        alert('Text-to-speech is not supported in this browser.');
     }
+}
 
-    // Reveal the answer
-    function revealAnswer() {
-        answerText.textContent = answers[currentQuestionIndex];
-        answerText.style.display = 'block'; // Show the answer
+// Set background music volume (low volume)
+const music = document.getElementById('background-music');
+music.volume = 0.2; // Set volume to 20% of the maximum
 
-        // Speak the answer
-        speakText(`Answer: ${answers[currentQuestionIndex]}`);
-    }
-
-    // Go back to the home page
-    function goBack() {
-        homePage.style.display = 'grid';
-        questionPage.style.display = 'none';
-    }
-
-    // Save selected thumbnails to localStorage
-    function saveProgress() {
-        localStorage.setItem('selectedThumbnails', JSON.stringify(selectedThumbnails));
-    }
-
-    // End quiz and clear localStorage
-    function endQuiz() {
-        localStorage.removeItem('selectedThumbnails');
-        location.reload(); // Refresh the page to reset state
-    }
-
-    // Function to speak text
-    function speakText(text) {
-        if ('speechSynthesis' in window) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            speechSynthesis.speak(utterance);
-        } else {
-            alert('Text-to-speech is not supported in this browser.');
-        }
-    }
+// Play music immediately when the page loads
+window.onload = function() {
+    music.play();
+}
 </script>
 </body>
 </html>
