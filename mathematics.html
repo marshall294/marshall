@@ -168,8 +168,6 @@ const mathAnswers = [
     "24 cm²"
 ];
 
-
-
 let currentQuestionIndex = 0;
 
 const startQuizButton = document.getElementById('start-quiz');
@@ -189,24 +187,24 @@ function startQuiz() {
 }
 
 function loadQuestion() {
-    if (currentQuestionIndex >= questions.length) {
+    if (currentQuestionIndex >= mathQuestions.length) {
         alert('You have completed the quiz!');
         goBack();
         return;
     }
-    questionText.textContent = questions[currentQuestionIndex];
+    questionText.textContent = mathQuestions[currentQuestionIndex];
     answerText.style.display = 'none';
     
     // Read the question aloud
-    speakText(`Question: ${questions[currentQuestionIndex]}`);
+    speakText(`Question: ${mathQuestions[currentQuestionIndex]}`);
 }
 
 function revealAnswer() {
-    answerText.textContent = answers[currentQuestionIndex];
+    answerText.textContent = mathAnswers[currentQuestionIndex];
     answerText.style.display = 'block';
     
     // Read the answer aloud
-    speakText(`Answer: ${answers[currentQuestionIndex]}`);
+    speakText(`Answer: ${mathAnswers[currentQuestionIndex]}`);
 }
 
 function nextQuestion() {
@@ -223,7 +221,7 @@ function goBack() {
 }
 
 function updateProgressBar() {
-    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+    const progress = ((currentQuestionIndex + 1) / mathQuestions.length) * 100;
     progressBarFilled.style.width = `${progress}%`;
 }
 
