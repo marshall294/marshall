@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riders FC - Home</title>
+    <link rel="stylesheet" href="rider.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            background-color: #f0f0f0;
+            color: #444;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: pink;
+            padding: 10px 0;
+            z-index: 2;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .menu li {
+            margin-right: 20px;
+            position: relative;
+        }
+        .menu li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            display: block;
+        }
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            padding: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .menu li:hover .submenu {
+            display: block;
+        }
+        .submenu li {
+            margin: 5px 0;
+        }
+
+        /* Logo styles */
+        .logo-container {
+            position: fixed;
+            top: 70px;
+            right: 10px;
+            width: 123px;
+            height: 123px;
+            z-index: 3; /* Ensure logo is on top */
+        }
+
+        @keyframes rotateRing {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            animation: rotateLogo 3s infinite linear;
+        }
+
+        @keyframes rotateLogo {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        } 
+
+        .info-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-align: center;
+            font-size: 16px;
+            width: 80%;
+            max-width: 400px;
+            background-color: rgba(51, 51, 51, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1;
+            display: none;
+        }
+
+        h2 {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            text-align: center;
+            font-size: 18px;
+            z-index: 2;
+        }
+
+        /* Responsive CSS */
+        @media only screen and (max-width: 768px) {
+            .info-container {
+                width: 90%;
+                max-width: 300px;
+                font-size: 14px;
+            }
+        }
+
+        /* Video styles */
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        /* Blinking button styles */
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .blink-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 15px 30px;
+            background-color: #ff5733;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            animation: blink 1.5s infinite;
+            z-index: 4;
+            text-decoration: none;
+        }
+
+        .blink-button:hover {
+            background-color: #c1351d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="menu">
+            <li><a href="/ridersfc">Home</a></li>
+            <li><a href="/upcoming">Upcoming</a></li>
+            <li><a href="/shop">Teams</a></li>
+            <li><a href="/shop">Shop</a></li>
+            </ul>
+        </nav>
+        <h2>Riders FC - RC: 7279702</h2>
+    </header>
+
+    <!-- Logo -->
+    <div class="logo-container">
+        <div class="ring"></div>
+        <img class="logo" src="https://riders-football-club.vercel.app/logo.jpg" alt="Logo">
+    </div>
+    <video autoplay muted loop>
+        <source src="https://riders-football-club.vercel.app/video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Random information container -->
+    <div class="info-container" id="randomInfo"></div>
+    <script>
+        const infoContainer = document.getElementById('randomInfo');
+        const infoData = [
+            "Welcome to Riders Football Club.",
+            "TO INSPIRE A PASSION FOR FOOTBALL, FOSTER SPORTSMANSHIP, AND EMPOWER INDIVIDUALS THROUGH TEAMWORK AND ATHLETIC EXCELLENCE. WE ARE DEDICATED TO CREATING A POSITIVE AND INCLUSIVE ENVIRONMENT WHERE PLAYERS OF ALL AGES AND BACKGROUNDS CAN DEVELOP THEIR SKILLS, BUILD LASTING FRIENDSHIPS, AND EMBRACE THE SPIRIT OF THE GAME.",
+            "Address: SULEIMAN BARAU TECHNICAL COLLEGE, KWAMBA 910101, SULEJA, NIGER STATE, NIGERIA.",
+            "TO BELIEVE IN THE POWER OF COLLABORATION AND UNITY, THROUGH TEAMWORK, WE ACHIEVE MORE ON AND OFF THE FIELD.",
+            "TO ACTIVELY ENGAGE WITH OUR LOCAL COMMUNITY, PROMOTING THE VALUES OF SPORTSMANSHIP, HEALTH, AND WELL-BEING AMONG YOUTH AND FAMILIES.",
+            "TO WELCOME PLAYERS FROM ALL BACKGROUNDS AND ABILITIES, FOSTERING A DIVERSE AND INCLUSIVE FOOTBALL FAMILY WHERE EVERYONE HAS THE OPPORTUNITY TO THRIVE."
+        ];
+
+        let currentIndex = 0;
+
+        function displayRandomInfo() {
+            infoContainer.textContent = infoData[currentIndex];
+            currentIndex = (currentIndex + 1) % infoData.length;
+            infoContainer.style.display = 'block';
+            setTimeout(() => {
+                infoContainer.style.display = 'none';
+                displayRandomInfo(); // Call the function again after hiding
+            }, 15000); // Display each info for 15 seconds
+        }
+
+        displayRandomInfo(); // Initial display
+    </script>
+
+    <!-- Blinking button that links to competition page -->
+    <a href="competition.html" class="blink-button">Our Competitions</a>
+</body>
+</html>

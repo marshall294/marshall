@@ -1,0 +1,303 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: none;
+    color: blue;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.logo img {
+    width: 150px;
+    animation: logoAnimation 3s infinite;
+}
+
+@keyframes logoAnimation {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(360deg);
+    }
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: blue;
+    text-decoration: none;
+}
+
+.video-section {
+    background: #e6f7ff;
+    padding: 20px;
+    text-align: center;
+}
+
+.video-section h2 {
+    margin-bottom: 20px;
+}
+
+.videos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.videos video {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.videos video:hover {
+    transform: scale(1.05);
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+.service-section {
+    background: white;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 2s;
+}
+
+.service-section img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.service-section img:hover {
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.start-button {
+    background: linear-gradient(145deg, #4CAF50, #2E7D32);
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 5px #666;
+    transition: all 0.3s ease;
+}
+
+.start-button:hover {
+    background: linear-gradient(145deg, #66BB6A, #388E3C);
+}
+
+.start-button:active {
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+footer {
+    background: #0073e6;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.social-media {
+    margin-top: 10px;
+}
+
+.social-media a {
+    margin: 0 10px;
+    display: inline-block;
+}
+
+.social-media img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+}
+
+.social-media img:hover {
+    transform: scale(1.2);
+}
+main.subscription-form {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+input[type="text"], input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.start-button {
+    background: linear-gradient(145deg, #4CAF50, #2E7D32);
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 5px #666;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+        .message {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            background-color: #0073e6;
+            padding: 10px;
+            left: 0;
+            top: 100%;
+        }
+        nav ul li ul li {
+            display: block;
+        }
+        nav ul li:hover ul {
+            display: block;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline-block;
+            position: relative;
+        }
+        h2 {
+            margin-top: 0;
+            text-align: center;
+            font-size: 24px;
+            color: #0073e6;
+            opacity: 0;
+            animation: fadeInOut 4s ease-in-out infinite;
+        }
+
+        h2:nth-of-type(1) { animation-delay: 0s; }
+        h2:nth-of-type(2) { animation-delay: 1s; }
+        h2:nth-of-type(3) { animation-delay: 2s; }
+        h2:nth-of-type(4) { animation-delay: 3s; }
+        h2:nth-of-type(5) { animation-delay: 4s; }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        /* Logo styles */
+        .logo-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 120px;
+            height: 120px;
+            z-index: 3; /* Ensure logo is on top */
+        }
+
+        .ring {
+            width: 120px;
+            height: 120px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: rotateRing 5s infinite linear;
+        }

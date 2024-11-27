@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Fixtures</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradient background */
+        }
+
+        h2, h4 {
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+        }
+
+        header .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        header .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        /* Fixtures List Styles */
+        #fixtures {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #fixtures-list {
+            margin-top: 30px;
+        }
+
+        /* Fixture Item Styles */
+        .fixture-item {
+            background-color: #fff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fixture-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+/* Fixture Item Styles */
+.fixture-item .teams {
+    display: flex;
+    justify-content: space-around; /* Adjusted to bring teams closer */
+    align-items: center;
+    color: #333;
+    gap: 10px; /* Added gap to reduce space between the teams */
+}
+
+.fixture-item .team {
+    text-align: center;
+    margin: 0; /* Remove margin for a more compact layout */
+}
+
+.fixture-item .team img {
+    width: 50px; /* Kept the size of the team logo */
+    height: 50px;
+    border-radius: 50%;
+}
+
+.fixture-item .team p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Adjusting the "vs" text to maintain balance */
+.fixture-item .vs {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff7e5f; /* Accent color */
+    margin: 0 15px; /* Reduced spacing for better balance */
+}
+
+
+        .fixture-item .match-datetime {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            color: blue;
+        }
+
+        /* Centered Score and Status with 3D Font */
+        .match-stats {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff7e5f; /* Accent color */
+            text-align: center;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2), -1px -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Fixture Item vs */
+        .fixture-item .vs {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff7e5f; /* Accent color */
+        }
+
+        /* Statistics Section */
+        .match-stats-detail {
+            font-size: 16px;
+            color: #444;
+            text-align: center;
+        }
+
+        .match-stats-detail p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .status-content {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4CAF50; /* Green color for 'not-started' status */
+            text-align: center;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .status-content.in-progress {
+            color: #FF9800; /* Orange color for 'in-progress' */
+        }
+
+        .status-content.finished {
+            color: #F44336; /* Red color for 'finished' */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer .social-media a {
+            margin: 0 10px;
+        }
+
+        footer .social-media img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header .nav-links {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            #fixtures {
+                padding: 15px;
+            }
+
+    .fixture-item .teams {
+        flex-direction: row;  /* Ensure teams are still in a row on smaller screens */
+        gap: 10px;  /* Optional: Reduce gap on smaller screens */
+    }
+
+            .fixture-item .team img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+/* Event Name Style */
+.event-name {
+    font-family: 'Arial', sans-serif; /* Or use a custom font if preferred */
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #333; /* Dark color for better contrast */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments for the event name */
+@media (max-width: 768px) {
+    .event-name {
+        font-size: 20px;
+        letter-spacing: 0.5px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <img src="https://img.freepik.com/premium-vector/football-club-vector-logo-design-template_430232-389.jpg" alt="Logo" class="logo">
+        <ul class="nav-links">
+            <li><a href="/ridersfc">Home</a></li>
+            <li><a href="/teams">Teams</a></li>
+            <li><a href="/fixtures">Fixtures</a></li>
+            <li><a href="#shop">Shop</a></li>
+        </ul>
+    </header>
+
+    <!-- Fixtures List Section -->
+    <section id="fixtures">
+        <h2>Upcoming/Passed Fixtures</h2>
+        <div id="fixtures-list"></div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="social-media">
+<a href="https://www.facebook.com" target="_blank" style="font-size: 30px; color: #3b5998;">
+    <i class="fab fa-facebook"></i> Facebook
+</a>
+<a href="https://twitter.com" target="_blank" style="font-size: 30px; color: #1DA1F2;">
+    <i class="fab fa-twitter"></i> Twitter
+</a>
+<a href="https://www.instagram.com" target="_blank" style="font-size: 30px; color: #E4405F;">
+    <i class="fab fa-instagram"></i> Instagram
+</a>
+
+        </div>
+        <p>&copy; 2024 Football Club</p>
+    </footer>
+
+    <!-- Firebase SDK v8 CDN for non-modular use -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script>
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDr1XsWltrYOMXT7_MqylD8bOTGjikmYzE",
+        authDomain: "riders-5ad93.firebaseapp.com",
+        projectId: "riders-5ad93",
+        storageBucket: "riders-5ad93.appspot.com",
+        messagingSenderId: "956987352089",
+        appId: "1:956987352089:web:bee471f0cb74626bbb7688"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Load fixtures and display them
+    function loadFixtures() {
+        db.collection("fixtures").get().then((snapshot) => {
+            const fixtureList = document.getElementById("fixtures-list");
+            fixtureList.innerHTML = "";  // Clear previous fixtures
+
+            snapshot.forEach(doc => {
+                const fixture = doc.data();
+                const firstTeamId = fixture.firstTeamId;
+                const secondTeamId = fixture.secondTeamId;
+
+                // Fetch team names and logos based on team IDs
+                const firstTeamNamePromise = db.collection("teams").doc(firstTeamId).get();
+                const secondTeamNamePromise = db.collection("teams").doc(secondTeamId).get();
+
+                Promise.all([firstTeamNamePromise, secondTeamNamePromise]).then(([firstTeamDoc, secondTeamDoc]) => {
+                    const firstTeamName = firstTeamDoc.data().name;
+                    const secondTeamName = secondTeamDoc.data().name;
+                    const firstTeamLogo = firstTeamDoc.data().logo;
+                    const secondTeamLogo = secondTeamDoc.data().logo;
+
+                    const stats = fixture.stats;
+                    const matchDate = new Date(fixture.date);  // Convert to Date object
+
+                    // Format match date and time
+                    const matchDateFormatted = matchDate.toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    const matchTime = matchDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                    // Create fixture element
+                    const fixtureDiv = document.createElement("div");
+                    fixtureDiv.classList.add("fixture-item");
+                    fixtureDiv.innerHTML = `
+                        <h4 class="event-name">${fixture.event}</h4> <!-- Event Name Added -->
+                        <div class="teams">
+                            <div class="team">
+                                <img src="${firstTeamLogo}" alt="${firstTeamName}">
+                                <p>${firstTeamName}</p>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <img src="${secondTeamLogo}" alt="${secondTeamName}">
+                                <p>${secondTeamName}</p>
+                            </div>
+                        </div>
+                        <div class="match-datetime">
+                            <span>${matchDateFormatted}</span>
+                            <span>${matchTime}</span>
+                        </div>
+                        <div class="match-stats">
+                            <p>${stats.homeScore} - ${stats.awayScore}</p>
+                        </div>
+                        <div class="match-stats-detail">
+                            <p>Ball Possession: ${stats.ballPossession}</p>
+                            <p>Yellow Cards: ${stats.yellowCards}</p>
+                            <p>Red Cards: ${stats.redCards}</p>
+                        </div>
+                        <div class="status-content ${stats.status.toLowerCase()}">
+                            ${stats.status}
+                        </div>
+                    `;
+                    fixtureList.appendChild(fixtureDiv);
+                });
+            });
+        });
+    }
+
+    // Initialize the page
+    loadFixtures();
+</script>
+</body>
+</html>

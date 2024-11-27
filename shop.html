@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('photo2.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
+            animation: animateText 3s infinite;
+        }
+
+        .container p {
+            font-size: 1.2em;
+            position: relative;
+            z-index: 10;
+        }
+
+        .container .construction {
+            font-size: 5em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            color: rgba(255, 255, 255, 0.05);
+            animation: animateText 3s infinite;
+        }
+
+        @keyframes animateText {
+            0%, 100% {
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 25px #ff0000, 0 0 50px #ff0000, 0 0 100px #ff0000;
+            }
+            50% {
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 25px #00ff00, 0 0 50px #00ff00, 0 0 100px #00ff00;
+            }
+        }
+
+        .animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .animation div {
+            position: absolute;
+            bottom: -150px;
+            background: rgba(255, 255, 255, 0.2);
+            animation: rise 15s infinite linear;
+            border-radius: 50%;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        .animation div:nth-child(1) {
+            left: 10%;
+            width: 60px;
+            height: 60px;
+            animation-duration: 7s;
+        }
+
+        .animation div:nth-child(2) {
+            left: 30%;
+            width: 100px;
+            height: 100px;
+            animation-duration: 10s;
+        }
+
+        .animation div:nth-child(3) {
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            animation-duration: 8s;
+        }
+
+        .animation div:nth-child(4) {
+            left: 70%;
+            width: 120px;
+            height: 120px;
+            animation-duration: 12s;
+        }
+
+        .animation div:nth-child(5) {
+            left: 90%;
+            width: 50px;
+            height: 50px;
+            animation-duration: 6s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Page Under Construction</h1>
+        <p>We are working hard to bring you a great experience. Stay tuned!</p>
+        <div class="construction">Under Construction</div>
+    </div>
+    <div class="animation">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+</html>
