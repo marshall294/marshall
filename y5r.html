@@ -321,6 +321,9 @@ async function loadAllResults() {
             document.body.innerHTML = originalContent;
             loadAllResults(); // Reload the results after printing
         }
+if (result && result['Correct Answer']) {
+  // process the result
+}
 
         // Load all results when the page loads
         loadAllResults();
