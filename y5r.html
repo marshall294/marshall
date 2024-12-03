@@ -203,130 +203,134 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js" type="module"></script>
 
-    <script type="module">
-        // Import Firebase functions
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-        import { getDatabase, ref, get, onValue } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
+<script type="module">
+    // Import Firebase functions
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+    import { getDatabase, ref, get, onValue } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
-        // Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCItKIQ015G4u6XbvXi_-_5ArKd73yf5ak",
-  authDomain: "year5-6f785.firebaseapp.com",
-  projectId: "year5-6f785",
-  storageBucket: "year5-6f785.firebasestorage.app",
-  messagingSenderId: "904150572094",
-  appId: "1:904150572094:web:e2fbc29bcd94f34b95056f"
-};
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCItKIQ015G4u6XbvXi_-_5ArKd73yf5ak",
+        authDomain: "year5-6f785.firebaseapp.com",
+        projectId: "year5-6f785",
+        storageBucket: "year5-6f785.firebasestorage.app",
+        messagingSenderId: "904150572094",
+        appId: "1:904150572094:web:e2fbc29bcd94f34b95056f"
+    };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
 
-        // Reference to the word in Firebase
-        const wordRef = ref(database, 'word');
+    // Reference to the word in Firebase
+    const wordRef = ref(database, 'word');
 
-        // Function to display the word
-        function displayWord() {
-            const displayWordElement = document.getElementById('display-word');
-            onValue(wordRef, (snapshot) => {
-                const word = snapshot.val();
-                displayWordElement.textContent = word || 'No questions available';
-            });
-        }
+    // Function to display the word
+    function displayWord() {
+        const displayWordElement = document.getElementById('display-word');
+        onValue(wordRef, (snapshot) => {
+            const word = snapshot.val();
+            displayWordElement.textContent = word || 'No questions available';
+        });
+    }
 
-        // Load the word when the page loads
-        displayWord();
+    // Load the word when the page loads
+    displayWord();
 
-        // Function to load all student results from Firebase
-async function loadAllResults() {
-    const resultsSection = document.getElementById('resultsSection');
-    resultsSection.innerHTML = ''; // Clear previous results
+    // Function to load all student results from Firebase
+    async function loadAllResults() {
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.innerHTML = ''; // Clear previous results
 
-    try {
-        // Fetch results from Firebase
-        const resultsRef = ref(database, 'results');
-        const snapshot = await get(resultsRef);
-        const allResults = snapshot.val() || {};
+        try {
+            // Fetch results from Firebase
+            const resultsRef = ref(database, 'results');
+            const snapshot = await get(resultsRef);
+            const allResults = snapshot.val() || {};
 
-        const questionsRef = ref(database, 'questions');
-        const questionsSnapshot = await get(questionsRef);
-        const questions = questionsSnapshot.val();
-        if (!questions) {
-            alert('No questions found.');
-            return;
-        }
+            const questionsRef = ref(database, 'questions');
+            const questionsSnapshot = await get(questionsRef);
+            const questions = questionsSnapshot.val();
+            if (!questions) {
+                alert('No questions found.');
+                return;
+            }
 
-        const resultsArray = Object.values(allResults).reverse();
-        resultsArray.forEach((student, index) => {
-            let correctCount = 0;
-            student.answers.forEach((answer, questionIndex) => {
-                const correctAnswer = questions[questionIndex]['Correct Answer'];
-                if (answer === correctAnswer) correctCount++;
-            });
-            const scorePercentage = ((correctCount / questions.length) * 100).toFixed(2);
+            const resultsArray = Object.values(allResults).reverse();
+            resultsArray.forEach((student, index) => {
+                let correctCount = 0;
+                if (student.answers && Array.isArray(student.answers)) {
+                    student.answers.forEach((answer, questionIndex) => {
+                        const question = questions[questionIndex];
+                        const correctAnswer = question ? question['Correct Answer'] : null;
+                        if (answer === correctAnswer) correctCount++;
+                    });
+                }
+                const scorePercentage = ((correctCount / (questions ? questions.length : 1)) * 100).toFixed(2);
 
-            // Create student result block
-            let studentBlock = `
-                <div class="student-result" id="student-result-${index}">
-                    <div class="student-name">Student: ${student.name}</div>
-                    <div class="score-frame">Score: <strong>${scorePercentage}%</strong></div>
-            `;
+                // Create student result block
+                let studentBlock = `
+                    <div class="student-result" id="student-result-${index}">
+                        <div class="student-name">Student: ${student.name}</div>
+                        <div class="score-frame">Score: <strong>${scorePercentage}%</strong></div>
+                `;
 
-            student.answers.forEach((answer, questionIndex) => {
-                const question = questions[questionIndex];
-                const correctAnswer = question['Correct Answer'];
-                const isCorrect = answer === correctAnswer;
+                if (student.answers && Array.isArray(student.answers)) {
+                    student.answers.forEach((answer, questionIndex) => {
+                        const question = questions[questionIndex];
+                        if (question) {
+                            const correctAnswer = question['Correct Answer'];
+                            const isCorrect = answer === correctAnswer;
+
+                            studentBlock += `
+                                <div class="question-container ${isCorrect ? 'correct' : 'incorrect'}">
+                                    <div class="question-text"><strong>Q${questionIndex + 1}:</strong> ${question.Question}</div>
+                                    <div class="options">
+                                        <strong>Options:</strong>
+                                        <ul>
+                                            <li>A) ${question['Option A']}</li>
+                                            <li>B) ${question['Option B']}</li>
+                                            <li>C) ${question['Option C']}</li>
+                                            <li>D) ${question['Option D']}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="answer">
+                                        <strong>Your Answer:</strong> ${answer || 'No Answer'}<br>
+                                        <strong>Correct Answer:</strong> ${correctAnswer || 'Not Available'}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+                }
 
                 studentBlock += `
-                    <div class="question-container ${isCorrect ? 'correct' : 'incorrect'}">
-                        <div class="question-text"><strong>Q${questionIndex + 1}:</strong> ${question.Question}</div>
-                        <div class="options">
-                            <strong>Options:</strong>
-                            <ul>
-                                <li>A) ${question['Option A']}</li>
-                                <li>B) ${question['Option B']}</li>
-                                <li>C) ${question['Option C']}</li>
-                                <li>D) ${question['Option D']}</li>
-                            </ul>
-                        </div>
-                        <div class="answer">
-                            <strong>Your Answer:</strong> ${answer || 'No Answer'}<br>
-                            <strong>Correct Answer:</strong> ${correctAnswer}
-                        </div>
+                    <button class="print-button" onclick="printResult(${index})">Print Result</button>
                     </div>
                 `;
+                resultsSection.innerHTML += studentBlock;
             });
-            studentBlock += `
-                <button class="print-button" onclick="printResult(${index})">Print Result</button>
-                </div>
-            `;
-            resultsSection.innerHTML += studentBlock;
-        });
-    } catch (error) {
-        console.error("Error fetching data from Firebase:", error);
-        alert("Failed to load results. Please try again later.");
-    }
-}
-
-
-        // Function to print a specific student's result
-        function printResult(index) {
-            const resultBlock = document.getElementById(`student-result-${index}`).cloneNode(true);
-            const originalContent = document.body.innerHTML;
-
-            document.body.innerHTML = '';
-            document.body.appendChild(resultBlock);
-
-            window.print();
-            document.body.innerHTML = originalContent;
-            loadAllResults(); // Reload the results after printing
+        } catch (error) {
+            console.error("Error fetching data from Firebase:", error);
+            alert("Failed to load results. Please try again later.");
         }
-if (result && result['Correct Answer']) {
-  // process the result
-}
+    }
 
-        // Load all results when the page loads
-        loadAllResults();
-    </script>
+    // Function to print a specific student's result
+    function printResult(index) {
+        const resultBlock = document.getElementById(`student-result-${index}`).cloneNode(true);
+        const originalContent = document.body.innerHTML;
+
+        document.body.innerHTML = '';
+        document.body.appendChild(resultBlock);
+
+        window.print();
+        document.body.innerHTML = originalContent;
+        loadAllResults(); // Reload the results after printing
+    }
+
+    // Load all results when the page loads
+    loadAllResults();
+</script>
 </body>
 </html>
