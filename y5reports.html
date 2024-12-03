@@ -162,142 +162,151 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js" type="module"></script>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-        import { getDatabase, ref, get, onValue } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+    import { getDatabase, ref, get, onValue } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCItKIQ015G4u6XbvXi_-_5ArKd73yf5ak",
-            authDomain: "year5-6f785.firebaseapp.com",
-            projectId: "year5-6f785",
-            storageBucket: "year5-6f785.firebasestorage.app",
-            messagingSenderId: "904150572094",
-            appId: "1:904150572094:web:e2fbc29bcd94f34b95056f"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyCItKIQ015G4u6XbvXi_-_5ArKd73yf5ak",
+        authDomain: "year5-6f785.firebaseapp.com",
+        projectId: "year5-6f785",
+        storageBucket: "year5-6f785.firebasestorage.app",
+        messagingSenderId: "904150572094",
+        appId: "1:904150572094:web:e2fbc29bcd94f34b95056f"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
 
-        const wordRef = ref(database, 'word');
+    const wordRef = ref(database, 'word');
 
-        function displayWord() {
-            const displayWordElement = document.getElementById('display-word');
-            onValue(wordRef, (snapshot) => {
-                const word = snapshot.val();
-                displayWordElement.textContent = word || 'No questions available';
-            });
+    function displayWord() {
+        const displayWordElement = document.getElementById('display-word');
+        onValue(wordRef, (snapshot) => {
+            const word = snapshot.val();
+            displayWordElement.textContent = word || 'No questions available';
+        });
+    }
+
+    displayWord();
+
+    async function loadAllResults() {
+        const resultsTable = document.getElementById('resultsTable')?.getElementsByTagName('tbody')[0];
+        const studentReportsContainer = document.getElementById('studentReports');
+        const classSummary = document.getElementById('classSummary');
+
+        if (!resultsTable || !studentReportsContainer || !classSummary) {
+            console.error('One or more elements are missing from the DOM.');
+            return;
         }
 
-        displayWord();
+        resultsTable.innerHTML = ''; // Clear previous results
+        studentReportsContainer.innerHTML = ''; // Clear previous reports
+        classSummary.innerHTML = ''; // Clear previous class summary
 
-        async function loadAllResults() {
-            const resultsTable = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
-            const studentReportsContainer = document.getElementById('studentReports');
-            const classSummary = document.getElementById('classSummary');
+        try {
+            const resultsRef = ref(database, 'results');
+            const snapshot = await get(resultsRef);
+            const allResults = snapshot.val() || {};
 
-            resultsTable.innerHTML = ''; // Clear previous results
-            studentReportsContainer.innerHTML = ''; // Clear previous reports
-            classSummary.innerHTML = ''; // Clear previous class summary
+            const questionsRef = ref(database, 'questions');
+            const questionsSnapshot = await get(questionsRef);
+            const questions = questionsSnapshot.val();
+            if (!questions) {
+                alert('No questions found.');
+                return;
+            }
 
-            try {
-                const resultsRef = ref(database, 'results');
-                const snapshot = await get(resultsRef);
-                const allResults = snapshot.val() || {};
+            const resultsArray = Object.values(allResults).reverse();
+            let classCorrectCount = 0;
+            let classTotalCount = 0;
+            let totalScores = [];
+            let highestScore = 0;
+            let highestStudent = '';
+            let lowestScore = 100;
+            let lowestStudent = '';
+            let aboveAverage = [];
+            let belowAverage = [];
 
-                const questionsRef = ref(database, 'questions');
-                const questionsSnapshot = await get(questionsRef);
-                const questions = questionsSnapshot.val();
-                if (!questions) {
-                    alert('No questions found.');
-                    return;
-                }
+            resultsArray.forEach((student, index) => {
+                const studentName = student.name;
+                const studentAnswers = student.answers || [];
+                let correctAnswersCount = 0;
 
-                const resultsArray = Object.values(allResults).reverse();
-                let classCorrectCount = 0;
-                let classTotalCount = 0;
-                let totalScores = [];
-                let highestScore = 0;
-                let highestStudent = '';
-                let lowestScore = 100;
-                let lowestStudent = '';
-                let aboveAverage = [];
-                let belowAverage = [];
-
-                resultsArray.forEach((student, index) => {
-                    const studentName = student.name;
-                    const studentAnswers = student.answers;
-                    let correctAnswersCount = 0;
-
-                    studentAnswers.forEach((answer, questionIndex) => {
-                        const correctAnswer = questions[questionIndex]['Correct Answer'];
+                studentAnswers.forEach((answer, questionIndex) => {
+                    const question = questions[questionIndex];
+                    if (question) {
+                        const correctAnswer = question['Correct Answer'];
                         if (answer === correctAnswer) correctAnswersCount++;
-                    });
-
-                    const scorePercentage = (correctAnswersCount / questions.length) * 100;
-                    totalScores.push(scorePercentage);
-                    
-                    // Track highest and lowest scores
-                    if (scorePercentage > highestScore) {
-                        highestScore = scorePercentage;
-                        highestStudent = studentName;
                     }
-                    if (scorePercentage < lowestScore) {
-                        lowestScore = scorePercentage;
-                        lowestStudent = studentName;
-                    }
-
-                    if (scorePercentage > 60) {
-                        aboveAverage.push(studentName);
-                    } else {
-                        belowAverage.push(studentName);
-                    }
-
-                    const row = resultsTable.insertRow();
-                    row.insertCell(0).textContent = studentName;
-                    row.insertCell(1).textContent = `${scorePercentage.toFixed(2)}%`;
-
-                    const actionCell = row.insertCell(2);
-                    const printButton = document.createElement('button');
-                    printButton.textContent = 'View Report';
-                    printButton.onclick = () => generateStudentReport(student, questions, scorePercentage, index);
-                    actionCell.appendChild(printButton);
                 });
 
-                // Calculate class average
-                const classAverage = (totalScores.reduce((a, b) => a + b, 0) / totalScores.length).toFixed(2);
+                const scorePercentage = (correctAnswersCount / questions.length) * 100;
+                totalScores.push(scorePercentage);
 
-                // Display class summary
-                classSummary.innerHTML = `
-                    <p><strong>Class Average:</strong> ${classAverage}%</p>
-                    <p><strong>Highest Performing Student:</strong> ${highestStudent} (${highestScore}%)</p>
-                    <p><strong>Lowest Performing Student:</strong> ${lowestStudent} (${lowestScore}%)</p>
-                    <p><strong>Students Above Average (60%):</strong> ${aboveAverage.join(', ')}</p>
-                    <p><strong>Students Below Average (60%):</strong> ${belowAverage.join(', ')}</p>
-                `;
-            } catch (error) {
-                console.error('Error loading results:', error);
-            }
-        }
+                // Track highest and lowest scores
+                if (scorePercentage > highestScore) {
+                    highestScore = scorePercentage;
+                    highestStudent = studentName;
+                }
+                if (scorePercentage < lowestScore) {
+                    lowestScore = scorePercentage;
+                    lowestStudent = studentName;
+                }
 
-        function generateStudentReport(student, questions, scorePercentage, index) {
-            const studentReportContainer = document.getElementById('studentReports');
-            let studentReportHTML = `
-                <div class="student-report">
-                    <h3>Report for ${student.name}</h3>
-                    <p>Score: ${scorePercentage}%</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Question</th>
-                                <th>Your Answer</th>
-                                <th>Correct Answer</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                if (scorePercentage > 60) {
+                    aboveAverage.push(studentName);
+                } else {
+                    belowAverage.push(studentName);
+                }
+
+                const row = resultsTable.insertRow();
+                row.insertCell(0).textContent = studentName;
+                row.insertCell(1).textContent = `${scorePercentage.toFixed(2)}%`;
+
+                const actionCell = row.insertCell(2);
+                const printButton = document.createElement('button');
+                printButton.textContent = 'View Report';
+                printButton.onclick = () => generateStudentReport(student, questions, scorePercentage, index);
+                actionCell.appendChild(printButton);
+            });
+
+            // Calculate class average
+            const classAverage = (totalScores.reduce((a, b) => a + b, 0) / totalScores.length).toFixed(2);
+
+            // Display class summary
+            classSummary.innerHTML = `
+                <p><strong>Class Average:</strong> ${classAverage}%</p>
+                <p><strong>Highest Performing Student:</strong> ${highestStudent} (${highestScore}%)</p>
+                <p><strong>Lowest Performing Student:</strong> ${lowestStudent} (${lowestScore}%)</p>
+                <p><strong>Students Above Average (60%):</strong> ${aboveAverage.join(', ')}</p>
+                <p><strong>Students Below Average (60%):</strong> ${belowAverage.join(', ')}</p>
             `;
-            student.answers.forEach((answer, questionIndex) => {
-                const question = questions[questionIndex];
+        } catch (error) {
+            console.error('Error loading results:', error);
+        }
+    }
+
+    function generateStudentReport(student, questions, scorePercentage, index) {
+        const studentReportContainer = document.getElementById('studentReports');
+        let studentReportHTML = `
+            <div class="student-report">
+                <h3>Report for ${student.name}</h3>
+                <p>Score: ${scorePercentage}%</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Your Answer</th>
+                            <th>Correct Answer</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        student.answers.forEach((answer, questionIndex) => {
+            const question = questions[questionIndex];
+            if (question) {
                 const correctAnswer = question['Correct Answer'];
                 const status = (answer === correctAnswer) ? 'Correct' : 'Incorrect';
                 studentReportHTML += `
@@ -308,25 +317,27 @@
                         <td class="${status.toLowerCase()}">${status}</td>
                     </tr>
                 `;
-            });
-            studentReportHTML += `
-                </tbody>
-            </table>
-            <button class="print-button" onclick="printReport()">Print Report</button>
-            </div>
-            `;
-            studentReportContainer.innerHTML += studentReportHTML;
-        }
+            }
+        });
+        studentReportHTML += `
+            </tbody>
+        </table>
+        <button class="print-button" onclick="printReport()">Print Report</button>
+        </div>
+        `;
+        studentReportContainer.innerHTML += studentReportHTML;
+    }
 
-        function printReport() {
-            window.print();
-        }
+    function printReport() {
+        window.print();
+    }
 
-        function printAllReports() {
-            window.print();
-        }
+    function printAllReports() {
+        window.print();
+    }
 
-        loadAllResults();
-    </script>
+    loadAllResults();
+</script>
+
 </body>
 </html>
