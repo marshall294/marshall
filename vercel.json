@@ -1,3 +1,12 @@
 {
-  "cleanUrls": true
+  "hosting": {
+    "cleanUrls": true,
+    "redirects": [
+      {
+        "source": "/**",
+        "destination": "https://mathcloud.store",
+        "type": 301
+      }
+    ]
+  }
 }
