@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Global body styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header with logo and school name */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Rotating logo container */
+        .logo-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border: 5px solid #007bff;
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-container img {
+            width: 80%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* School name with 3D effect */
+        .school-name {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #007bff;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            margin-top: 10px;
+            animation: text3D 1.5s ease-in-out infinite alternate;
+        }
+
+        /* Keyframe animation for logo rotation */
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Keyframe animation for 3D text effect */
+        @keyframes text3D {
+            0% {
+                text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+                transform: scale(1.1);
+            }
+            100% {
+                text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.7);
+                transform: scale(1.2);
+            }
+        }
+
+        /* Login form container */
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Input fields */
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Login button */
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Error message */
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .logo-container {
+                width: 120px;
+                height: 120px;
+            }
+
+            .school-name {
+                font-size: 1.4em;
+            }
+
+            .login-container {
+                padding: 15px;
+            }
+
+            .login-container input,
+            .login-container button {
+                padding: 8px;
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .school-name {
+                font-size: 1.0em;
+            }
+
+            .logo-container {
+                width: 100px;
+                height: 100px;
+            }
+
+            .login-container input,
+            .login-container button {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBLlnm3T6tTD5AR0zq4LFrdrmpK_9xKdXY",
+            authDomain: "lesson-cc2b5.firebaseapp.com",
+            projectId: "lesson-cc2b5",
+            storageBucket: "lesson-cc2b5.appspot.com",
+            messagingSenderId: "987446797239",
+            appId: "1:987446797239:web:4bb1a1b03d15f14dac3e32"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Function to handle user login
+        window.loginUser = function loginUser() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // Get the user's role from Firestore (assuming users have roles stored)
+                    const usersCollection = collection(db, "users");
+                    const q = query(usersCollection, where("uid", "==", user.uid));
+                    getDocs(q).then((querySnapshot) => {
+                        if (!querySnapshot.empty) {
+                            const userDoc = querySnapshot.docs[0].data();
+                            const role = userDoc.role;
+
+                            // Redirect based on user role
+                            if (role === "admin") {
+                                window.location.href = "admin-dashboard.html"; // Redirect to admin dashboard
+                            } else if (role === "teacher") {
+                                window.location.href = "teacher-dashboard.html"; // Redirect to teacher dashboard
+                            } else if (role === "student") {
+                                window.location.href = "student-dashboard.html"; // Redirect to student dashboard
+                            }
+                        } else {
+                            alert("User not found in the database!");
+                        }
+                    }).catch((error) => {
+                        console.error("Error fetching user data from Firestore: ", error);
+                    });
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error("Login error: ", errorCode, errorMessage);
+                    alert("Login failed: " + errorMessage);
+                });
+        };
+    </script>
+</head>
+<body>
+    <!-- Header with rotating logo and 3D school name -->
+    <div class="header">
+        <div class="logo-container">
+            <!-- Add your logo here -->
+            <img src="https://www.mathcloud.store/logo.png" alt="School Logo">
+        </div>
+        <div class="school-name">Your School Name</div>
+    </div>
+
+    <!-- Login form container -->
+    <div class="login-container">
+        <h2>Login</h2>
+        <form>
+            <input type="email" id="email" placeholder="Email" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <button type="button" onclick="loginUser()">Login</button>
+        </form>
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+</body>
+</html>

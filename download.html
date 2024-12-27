@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Excel File</title>
+</head>
+<body>
+    <button id="download-btn">Download the Sample Excel File</button>
+
+    <p><strong>Instructions:</strong> After downloading the Excel file, make sure to edit it by entering only text-based questions. Any questions that include diagrams should be moved to the theory section of the school assessment portal. Do not leave any cells blank in the Excel file. Remember, you can still edit the Excel file even after uploading it.</p>
+
+    <script>
+        // This script will trigger the file download when the button is clicked
+        document.getElementById('download-btn').addEventListener('click', function () {
+            window.location.href = 'sample.xlsx'; // The file path to the Excel file
+        });
+    </script>
+</body>
+</html>
+
