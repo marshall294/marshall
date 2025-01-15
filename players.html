@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riders FC Player's Profile submission</title>
+
+    <!-- External CSS for fonts and animations -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <header>
+        Riders FC Player's Profile submission
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Submit your Profile</h2>
+            <form id="playerForm">
+                <input type="text" id="fullName" placeholder="Full Name" required>
+                <input type="text" id="nickname" placeholder="Nickname" required>
+                <input type="text" id="phone" placeholder="Phone Number" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="text" id="address" placeholder="Contact Address" required>
+                <input type="date" id="dob" placeholder="Date of Birth" required>
+                <select id="position" required>
+                    <option value="">Select Position</option>
+                    <option value="Goal Keeper">Goal Keeper</option>
+                    <option value="Defender">Defender</option>
+                    <option value="Midfield">Midfield</option>
+                    <option value="Forward">Forward</option>
+                </select>
+                <input type="number" id="height" placeholder="Height in cm" required>
+
+                <!-- New fields -->
+                <input type="text" id="country" placeholder="Country" required>
+                <input type="text" id="state" placeholder="State of Origin" required>
+                <input type="text" id="lga" placeholder="Local Government Area" required>
+                <input type="text" id="formerClub" placeholder="Former Club (if none, type none)" required>
+                <input type="text" id="presentClub" value="Riders FC" disabled required>
+
+                <!-- Terms and Conditions Acceptance -->
+                <div>
+                    <label>
+                        <input type="checkbox" id="termsCheckbox" required>
+                        By submitting this form, I fully accept the <a href="term.html" target="_blank">Terms and Conditions</a> of becoming a fully registered Riders FC Player.
+                    </label>
+                </div>
+
+                <button type="submit">Register Player</button>
+            </form>
+        </div>
+
+        <div class="players-grid" id="playersGrid"></div>
+    </div>
+    <script type="module" src="index.js"></script>
+
+</body>
+
+</html>
