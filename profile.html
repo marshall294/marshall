@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riders FC Player's Profile submission</title>
+
+    <!-- External CSS for fonts and animations -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+<style>
+    /* Base Styles */
+    body {
+        background-color: #eaf2f8; /* Softer background for better contrast */
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+        color: #333; /* Default text color for readability */
+        line-height: 1.6; /* Improve text spacing */
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #222; /* Slightly darker color for better visibility */
+        margin-bottom: 10px;
+    }
+
+    header {
+        background-color: #1d3557; /* Darker blue for a modern feel */
+        color: #f1faee; /* Softer white for text */
+        padding: 15px 0;
+        font-size: 2.2em;
+        font-family: 'Montserrat', sans-serif;
+        text-align: center;
+        animation: fadeIn 1.5s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    /* Container */
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px; /* Increased padding for better spacing */
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Form Styles */
+    .form-container {
+        background-color: #ffffff; /* Keep white for contrast */
+        width: 100%;
+        max-width: 600px;
+        padding: 25px; /* Increased padding for a cleaner look */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Modern shadow effect */
+        border-radius: 12px; /* Slightly more rounded corners */
+        box-sizing: border-box;
+    }
+
+    .form-container input,
+    .form-container select {
+        width: 100%;
+        padding: 12px;
+        margin: 15px 0; /* Better spacing between inputs */
+        border: 1px solid #ced4da; /* Subtle border color */
+        border-radius: 6px;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    .form-container input:focus,
+    .form-container select:focus {
+        outline: none;
+        border-color: #1d3557; /* Highlight active input */
+        box-shadow: 0 0 5px rgba(29, 53, 87, 0.2); /* Soft focus shadow */
+    }
+
+    .form-container button {
+        background-color: #457b9d; /* Muted blue for button */
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 6px;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-container button:hover {
+        background-color: #1d3557; /* Darker blue on hover */
+    }
+
+    /* Players Grid */
+    .players-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 40px;
+        width: 100%;
+        padding: 0 15px; /* Add padding to avoid edge clipping */
+        box-sizing: border-box;
+    }
+
+    /* Player Card */
+    .player-card {
+        background-color: #ffffff; /* Keep white for clarity */
+        padding: 20px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+        border-radius: 12px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .player-card:hover {
+        transform: translateY(-10px); /* Subtle hover effect */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Elevated shadow on hover */
+    }
+
+    .player-card img {
+        width: 120px; /* Slightly larger images */
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        border: 4px solid #457b9d; /* Add border to enhance image */
+    }
+
+    .player-card h3 {
+        margin: 10px 0;
+        font-size: 1.3em;
+        color: #222;
+    }
+
+    .player-card table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    .player-card th,
+    .player-card td {
+        padding: 2px 3px; /* Reduced padding */
+        font-size: 0.6rem; /* Smaller font size */
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .player-card th {
+        background-color: #f1f1f1;
+        font-weight: bold;
+    }
+
+    .player-card td {
+        background-color: #fbfbfb;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 600px) {
+        header {
+            font-size: 1.8em;
+        }
+
+        .form-container {
+            padding: 20px;
+        }
+
+        .form-container input,
+        .form-container select {
+            padding: 10px;
+        }
+
+        .form-container button {
+            padding: 12px;
+        }
+
+        .players-grid {
+            gap: 15px; /* Adjust gap for smaller screens */
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+    <header>
+        Riders FC Player's Profile submission
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Submit your Profile</h2>
+            <form id="playerForm">
+                <input type="text" id="fullName" placeholder="Full Name" required>
+                <input type="text" id="nickname" placeholder="Nickname" required>
+                <input type="text" id="phone" placeholder="Phone Number" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="text" id="address" placeholder="Contact Address" required>
+                <input type="date" id="dob" placeholder="Date of Birth" required>
+                <select id="position" required>
+                    <option value="">Select Position</option>
+                    <option value="Goal Keeper">Goal Keeper</option>
+                    <option value="Defender">Defender</option>
+                    <option value="Midfield">Midfield</option>
+                    <option value="Forward">Forward</option>
+                </select>
+                <input type="number" id="height" placeholder="Height in cm" required>
+
+                <!-- New fields -->
+                <input type="text" id="country" placeholder="Country" required>
+                <input type="text" id="state" placeholder="State of Origin" required>
+                <input type="text" id="lga" placeholder="Local Government Area" required>
+                <input type="text" id="formerClub" placeholder="Former Club (if none, type none)" required>
+                <input type="text" id="presentClub" value="Riders FC" disabled required>
+
+                <!-- Terms and Conditions Acceptance -->
+                <div>
+                    <label>
+                        <input type="checkbox" id="termsCheckbox" required>
+                        By submitting this form, I fully accept the <a href="term.html" target="_blank">Terms and Conditions</a> of becoming a fully registered Riders FC Player.
+                    </label>
+                </div>
+
+                <button type="submit">Register Player</button>
+            </form>
+        </div>
+
+        <div class="players-grid" id="playersGrid"></div>
+    </div>
+
+    <!-- Firebase SDK as Modules -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAFsHg9fK6IDnHbuxmBleEfIIfVGsuLDik",
+  authDomain: "profile-b825d.firebaseapp.com",
+  projectId: "profile-b825d",
+  storageBucket: "profile-b825d.firebasestorage.app",
+  messagingSenderId: "925276859161",
+  appId: "1:925276859161:web:194c60f6dbd9f1ef8bf388"
+};
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Wait until DOM is fully loaded before executing the code
+        document.addEventListener('DOMContentLoaded', () => {
+            const playerForm = document.getElementById('playerForm');
+            const playersGrid = document.getElementById('playersGrid');
+
+            // Handle form submission
+            playerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const fullName = document.getElementById('fullName').value;
+                const nickname = document.getElementById('nickname').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                const address = document.getElementById('address').value;
+                const dob = document.getElementById('dob').value;
+                const position = document.getElementById('position').value;
+                const height = document.getElementById('height').value;
+                const country = document.getElementById('country').value;
+                const state = document.getElementById('state').value;
+                const lga = document.getElementById('lga').value;
+                const formerClub = document.getElementById('formerClub').value;
+                const presentClub = document.getElementById('presentClub').value;
+
+                const playerData = {
+                    fullName,
+                    nickname,
+                    phone,
+                    email,
+                    address,
+                    dob,
+                    position,
+                    height,
+                    country,
+                    state,
+                    lga,
+                    formerClub,
+                    presentClub
+                };
+
+                try {
+                    // Check if a player with the same name and email already exists
+                    const playersRef = collection(db, "players");
+                    const q = query(playersRef, where("fullName", "==", fullName), where("email", "==", email));
+                    const querySnapshot = await getDocs(q);
+
+                    if (!querySnapshot.empty) {
+                        alert("Player profile already submitted, if not correct contact Marshall Jacob on Whatsapp (+2348102341648).");
+                        return; // Stop further form submission
+                    }
+
+                    // Get the total number of players to assign a correct image and card number
+                    const totalPlayersSnapshot = await getDocs(playersRef);
+                    const totalPlayers = totalPlayersSnapshot.size;
+
+                    // Assign image based on total players count (player1.png, player2.png, etc.)
+                    const playerImage = `player${totalPlayers + 1}.png`;
+
+                    // Add player data with the image path and card number to Firestore
+                    const docRef = await addDoc(playersRef, {
+                        ...playerData,
+                        playerImage,  // Add the image to the player data
+                        cardNumber: totalPlayers + 1 // Add the card number to the player data
+                    });
+
+                    alert('Player registered successfully!');
+                    playerForm.reset();
+                    loadPlayers();
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+            });
+
+            // Load players from Firestore and display them
+            const loadPlayers = async () => {
+                const querySnapshot = await getDocs(collection(db, "players"));
+                playersGrid.innerHTML = ''; // Clear the grid before displaying new players
+
+                querySnapshot.forEach(doc => {
+                    const player = doc.data();
+                    const playerCard = document.createElement('div');
+                    playerCard.classList.add('player-card');
+
+                    // Use the player image stored in Firestore
+                    const playerImage = player.playerImage;
+                    const cardNumber = player.cardNumber; // Use the card number from Firestore
+
+                    playerCard.innerHTML = `
+                        <img src="${playerImage}" alt="Player Image">
+                        <h3>${player.fullName} (${player.nickname})</h3>
+                        <table>
+                            <tr><th>Position</th><td>${player.position}</td></tr>
+                            <tr><th>Phone</th><td>${player.phone}</td></tr>
+                            <tr><th>Email</th><td>${player.email}</td></tr>
+                            <tr><th>Address</th><td>${player.address}</td></tr>
+                            <tr><th>DOB</th><td>${player.dob}</td></tr>
+                            <tr><th>Height</th><td>${player.height} cm</td></tr>
+                            <tr><th>Country</th><td>${player.country}</td></tr>
+                            <tr><th>State of Origin</th><td>${player.state}</td></tr>
+                            <tr><th>LGA</th><td>${player.lga}</td></tr>
+                            <tr><th>Former Club</th><td>${player.formerClub}</td></tr>
+                            <tr><th>Present Club</th><td>${player.presentClub}</td></tr>
+                        </table>
+                    `;
+
+                    playersGrid.appendChild(playerCard);
+                });
+            };
+
+            // Initial load of players
+            loadPlayers();
+        });
+    </script>
+
+</body>
+
+</html>
