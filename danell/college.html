@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College URLs</title>
+    <script type="module">
+        const firebaseConfig = {
+            apiKey: "AIzaSyAt1_h1qNpsvvTtJNojAq70eCqrfdJ0Sn0",
+            authDomain: "year-5.firebaseapp.com",
+            databaseURL: "https://year-5-default-rtdb.firebaseio.com",
+            projectId: "year-5",
+            storageBucket: "year-5.appspot.com",
+            messagingSenderId: "289843229551",
+            appId: "1:289843229551:web:7fe690010e854fd6a7ae9a"
+        };
+
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+        import { getDatabase, ref, get, child } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        async function displayCards() {
+            const cardContainer = document.getElementById("cardContainer");
+            cardContainer.innerHTML = ""; // Clear existing cards
+
+            const snapshot = await get(child(ref(db), 'urls'));
+            if (snapshot.exists()) {
+                Object.keys(snapshot.val()).forEach(className => {
+                    const urls = snapshot.val()[className];
+                    Object.keys(urls).forEach(urlKey => {
+                        const urlData = urls[urlKey];
+                        const card = document.createElement("div");
+                        card.className = "card";
+                        card.innerHTML = `<strong>${className}</strong>`;
+                        card.onclick = () => window.open(urlData.url, "_blank");
+                        cardContainer.appendChild(card);
+                    });
+                });
+            } else {
+                cardContainer.innerHTML = "<p>No URLs found.</p>";
+            }
+        }
+
+        // Login function
+        window.login = function() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (username === "Danell@mathcloud" && password === "Danell005") {
+                errorMessage.textContent = "";
+                document.getElementById("login-container").style.display = "none";
+                document.getElementById("content").style.display = "block";
+                displayCards();
+
+                // Show intro text and live class button after login
+                document.getElementById("introText").style.display = "block";
+                document.getElementById("liveClassButton").style.display = "block";
+            } else {
+                errorMessage.textContent = "Invalid username or password!";
+            }
+        };
+
+        // Load content on page load
+        window.onload = () => {
+            document.getElementById("content").style.display = "none"; // Hide content initially
+            document.getElementById("introText").style.display = "none"; // Hide intro text initially
+            document.getElementById("liveClassButton").style.display = "none"; // Hide live class button initially
+        };
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #007BFF;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(0, 123, 255, 1), 0 0 30px rgba(0, 123, 255, 0.5); }
+        }
+
+        .intro-text {
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        #cardContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .card {
+            padding: 20px;
+            margin: 10px;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            flex: 1 1 calc(30% - 20px); /* Responsive card size */
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                flex: 1 1 calc(100% - 20px); /* Full width on small screens */
+            }
+        }
+        .button {
+            padding: 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 12px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        .login-container {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-container input {
+            padding: 10px;
+            margin: 5px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Blinking button at the bottom */
+        #liveClassButton {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff6347;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            animation: blink 1s infinite alternate;
+            display: none; /* Initially hidden */
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>College Subject</h1>
+
+    <!-- Rephrased message with animation (hidden initially) -->
+    <div id="introText" class="intro-text" style="display: none;">
+        Below are the list of subjects you subscribe for class. If you want to add another subject, kindly contact MathCloud teams. Click each tab to explore.
+    </div>
+
+    <div id="login-container" class="login-container">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button class="button" onclick="login()">Login</button>
+        <div id="error-message" class="error"></div>
+    </div>
+
+    <div id="content">
+        <div id="cardContainer"></div>
+    </div>
+
+    <!-- Live Class Button (hidden initially) -->
+    <button id="liveClassButton" onclick="window.open('https://meet.google.com/ymk-sfao-xzf', '_blank')">Join Live Class</button>
+
+</body>
+</html>

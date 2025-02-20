@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Overview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f3;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .lesson-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .lesson-item {
+            background: #f9f9f9;
+            border-left: 5px solid #4CAF50;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .lesson-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .label-bold {
+            font-weight: bold;
+            color: #4CAF50; /* Bold color for labels */
+        }
+        .lesson-info {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        .lesson-links {
+            margin-top: 15px;
+        }
+        .lesson-links a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 15px;
+            position: relative;
+        }
+        .lesson-links a:hover {
+            color: #388E3C;
+        }
+        .lesson-links a::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: #4CAF50;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+        }
+        .lesson-links a:hover::after {
+            transform: scaleX(1);
+        }
+        @media (max-width: 600px) {
+            .lesson-item {
+                padding: 15px;
+            }
+            .lesson-item strong {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Computer Skills Lessons</h1>
+        <div class="lesson-list" id="lessonList"></div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAt1_h1qNpsvvTtJNojAq70eCqrfdJ0Sn0",
+            authDomain: "year-5.firebaseapp.com",
+            databaseURL: "https://year-5-default-rtdb.firebaseio.com",
+            projectId: "year-5",
+            storageBucket: "year-5.appspot.com",
+            messagingSenderId: "289843229551",
+            appId: "1:289843229551:web:7fe690010e854fd6a7ae9a"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.database();
+
+        // Load lessons when the page loads
+        window.onload = function() {
+            loadLessons();
+        };
+
+        function loadLessons() {
+            const lessonRef = db.ref('lessons/');
+            lessonRef.once('value').then((snapshot) => {
+                const lessons = snapshot.val();
+                const lessonList = document.getElementById('lessonList');
+                lessonList.innerHTML = ''; // Clear current list
+
+                if (lessons) {
+                    // Convert to array for sorting
+                    const lessonArray = Object.keys(lessons).map(key => ({
+                        id: key,
+                        ...lessons[key]
+                    }));
+
+                    // Sort by date (assuming date is in 'YYYY-MM-DD' format)
+                    lessonArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                    // Create lesson items
+                    lessonArray.forEach(lesson => {
+                        const lessonItem = document.createElement('div');
+                        lessonItem.classList.add('lesson-item');
+                        lessonItem.innerHTML = `
+                            <span class="label-bold">Topic:</span> <strong>${lesson.topic}</strong><br>
+                            <div class="lesson-info">
+                                <span class="label-bold">Academic Year:</span> ${lesson.academicYear} <br>
+                                <span class="label-bold">Term:</span> ${lesson.term} <br>
+                                <span class="label-bold">Week:</span> ${lesson.week} <br>
+                                <span class="label-bold">Date:</span> ${lesson.date}
+                            </div>
+                            <div class="lesson-links">
+                                <a href="${lesson.notes}" target="_blank">Lesson Notes</a>
+                                <a href="${lesson.activity}" target="_blank">Class Activity</a>
+                            </div>
+                        `;
+                        lessonList.appendChild(lessonItem);
+                    });
+                } else {
+                    lessonList.innerHTML = '<p>No lessons available.</p>';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

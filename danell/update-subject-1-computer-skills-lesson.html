@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Lessons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        select, input[type="text"], input[type="url"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons button {
+            background-color: #f44336; /* Red */
+            padding: 5px 10px;
+        }
+        .label-bold {
+            font-weight: bold;
+            color: #4CAF50; /* Bold color for labels */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Lessons</h1>
+        <form id="lessonForm">
+            <label class="label-bold" for="academicYear">Academic Year:</label>
+            <select id="academicYear">
+                <option value="2024/2025">2024/2025</option>
+                <option value="2025/2026">2025/2026</option>
+                <option value="2026/2027">2026/2027</option>
+                <option value="2027/2028">2027/2028</option>
+            </select>
+            <label class="label-bold" for="term">Term:</label>
+            <select id="term">
+                <option value="First">First</option>
+                <option value="Second">Second</option>
+                <option value="Third">Third</option>
+            </select>
+            <label class="label-bold" for="week">Week:</label>
+            <select id="week">
+                <option value="Week 1">Week 1</option>
+                <option value="Week 2">Week 2</option>
+                <option value="Week 3">Week 3</option>
+                <option value="Week 4">Week 4</option>
+                <option value="Week 5">Week 5</option>
+                <option value="Week 6">Week 6</option>
+                <option value="Week 7">Week 7</option>
+                <option value="Week 8">Week 8</option>
+                <option value="Week 9">Week 9</option>
+                <option value="Week 10">Week 10</option>
+                <option value="Week 11">Week 11</option>
+                <option value="Week 12">Week 12</option>
+            </select>
+            <label class="label-bold" for="topic">Topic:</label>
+            <input type="text" id="topic" placeholder="Enter lesson topic" />
+            <label class="label-bold" for="date">Date:</label>
+            <input type="date" id="date" />
+            <label class="label-bold" for="class">Class:</label>
+            <input type="text" id="class" value="Computer Skills" readonly>
+            <label class="label-bold" for="notes">Notes (Google Docs link):</label>
+            <input type="url" id="notes" placeholder="Enter Google Docs link" />
+            <label class="label-bold" for="activity">Class Activity:</label>
+            <input type="url" id="activity" placeholder="Enter Google Form link" />
+            <button type="submit">Add Lesson</button>
+        </form>
+        <div id="message"></div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Details</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="lessonList"></tbody>
+        </table>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAt1_h1qNpsvvTtJNojAq70eCqrfdJ0Sn0",
+            authDomain: "year-5.firebaseapp.com",
+            databaseURL: "https://year-5-default-rtdb.firebaseio.com",
+            projectId: "year-5",
+            storageBucket: "year-5.appspot.com",
+            messagingSenderId: "289843229551",
+            appId: "1:289843229551:web:7fe690010e854fd6a7ae9a"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.database();
+        let currentEditKey = null; // Store the key of the lesson being edited
+
+        // Load existing lessons when the page loads
+        window.onload = function() {
+            loadLessons();
+        };
+
+        function loadLessons() {
+            const lessonRef = db.ref('lessons/');
+            lessonRef.once('value').then((snapshot) => {
+                const lessons = snapshot.val();
+                const lessonList = document.getElementById('lessonList');
+                lessonList.innerHTML = ''; // Clear the current list
+
+                if (lessons) {
+                    Object.keys(lessons).forEach((key) => {
+                        const lesson = lessons[key];
+                        // Display lesson item
+                        const lessonRow = document.createElement('tr');
+                        lessonRow.innerHTML = `
+                            <td>${lesson.topic}</td>
+                            <td>${lesson.academicYear} | ${lesson.term} | ${lesson.week} | ${lesson.date}</td>
+                            <td class="action-buttons">
+                                <button onclick="editLesson('${key}')">Edit</button>
+                                <button onclick="deleteLesson('${key}')">Delete</button>
+                            </td>
+                        `;
+                        lessonList.appendChild(lessonRow);
+                    });
+                } else {
+                    lessonList.innerHTML = '<tr><td colspan="3">No lessons available.</td></tr>';
+                }
+            });
+        }
+
+        function editLesson(lessonKey) {
+            const lessonRef = db.ref(`lessons/${lessonKey}`);
+            lessonRef.once('value').then((snapshot) => {
+                const lesson = snapshot.val();
+                if (lesson) {
+                    document.getElementById('academicYear').value = lesson.academicYear;
+                    document.getElementById('term').value = lesson.term;
+                    document.getElementById('week').value = lesson.week;
+                    document.getElementById('topic').value = lesson.topic;
+                    document.getElementById('date').value = lesson.date;
+                    document.getElementById('notes').value = lesson.notes;
+                    document.getElementById('activity').value = lesson.activity;
+                    currentEditKey = lessonKey; // Store the key for updating
+                }
+            });
+        }
+
+        function deleteLesson(lessonKey) {
+            const lessonRef = db.ref(`lessons/${lessonKey}`);
+            lessonRef.remove()
+                .then(() => {
+                    document.getElementById('message').innerText = 'Lesson deleted successfully!';
+                    loadLessons(); // Reload lessons
+                })
+                .catch((error) => {
+                    document.getElementById('message').innerText = 'Error deleting lesson: ' + error.message;
+                });
+        }
+
+        // Add or Update lesson functionality
+        document.getElementById('lessonForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const lessonData = {
+                academicYear: document.getElementById('academicYear').value,
+                term: document.getElementById('term').value,
+                week: document.getElementById('week').value,
+                topic: document.getElementById('topic').value,
+                date: document.getElementById('date').value,
+                className: document.getElementById('class').value,
+                notes: document.getElementById('notes').value,
+                activity: document.getElementById('activity').value,
+            };
+
+            if (currentEditKey) {
+                // Update existing lesson
+                db.ref(`lessons/${currentEditKey}`).update(lessonData)
+                    .then(() => {
+                        document.getElementById('message').innerText = 'Lesson updated successfully!';
+                        loadLessons();
+                        currentEditKey = null; // Reset edit key
+                        this.reset(); // Clear the form
+                    })
+                    .catch((error) => {
+                        document.getElementById('message').innerText = 'Error updating lesson: ' + error.message;
+                    });
+            } else {
+                // Add new lesson
+                db.ref('lessons/').push(lessonData)
+                    .then(() => {
+                        document.getElementById('message').innerText = 'Lesson added successfully!';
+                        loadLessons();
+                        this.reset(); // Clear the form
+                    })
+                    .catch((error) => {
+                        document.getElementById('message').innerText = 'Error adding lesson: ' + error.message;
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
