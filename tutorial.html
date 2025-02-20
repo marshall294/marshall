@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Updates - MathCloud Tutorial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles4.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0f7fa;
+            margin: 20px;
+            color: #333;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            background-color: #00796b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            animation: slideDown 0.5s;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        h2 {
+            margin: 15px 0;
+            font-size: 1.5em;
+            color: #004d40;
+        }
+
+        select {
+            padding: 15px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #00796b;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        select:hover {
+            border-color: #004d40;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MathCloud Tutorial</h1>
+        <p>Choose your school, or if you are a private student, select your name from the dropdown below to explore the MathCloud digital suite.</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>For Schools</h2>
+            <select id="schoolDropdown">
+                <option value="">--Select a School--</option>
+                <option value="elementary">Elementary</option>
+                <option value="middle-school">Middle School</option>
+                <option value="high-school">High School</option>
+                <option value="college">College</option>
+            </select>
+        </section>
+
+        <section>
+            <h2>For Private Class</h2>
+            <select id="studentDropdown">
+                <option value="">--Select a Student--</option>
+            </select>
+        </section>
+    </main>
+<div class="button-container">
+    <a href="register.html" class="btn">Register</a>
+    <a href="about.html" class="btn">More About Us</a>
+</div>
+
+    <footer>
+        &copy; 2024 MathCloud Tutorial. All rights reserved.
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAt1_h1qNpsvvTtJNojAq70eCqrfdJ0Sn0",
+            authDomain: "year-5.firebaseapp.com",
+            databaseURL: "https://year-5-default-rtdb.firebaseio.com",
+            projectId: "year-5",
+            storageBucket: "year-5.appspot.com",
+            messagingSenderId: "289843229551",
+            appId: "1:289843229551:web:7fe690010e854fd6a7ae9a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        function populateDropdowns() {
+            const schoolDropdown = document.getElementById("schoolDropdown");
+            const studentDropdown = document.getElementById("studentDropdown");
+
+            onValue(ref(db, 'schools'), (snapshot) => {
+                schoolDropdown.innerHTML = '<option value="">--Select a School--</option>';
+                snapshot.forEach(childSnapshot => {
+                    const schoolData = childSnapshot.val();
+                    const option = document.createElement("option");
+                    option.value = childSnapshot.key;
+                    option.textContent = schoolData.name;
+                    schoolDropdown.appendChild(option);
+                });
+            });
+
+            onValue(ref(db, 'students'), (snapshot) => {
+                studentDropdown.innerHTML = '<option value="">--Select a Student--</option>';
+                snapshot.forEach(childSnapshot => {
+                    const studentData = childSnapshot.val();
+                    const option = document.createElement("option");
+                    option.value = childSnapshot.key;
+                    option.textContent = studentData.name;
+                    studentDropdown.appendChild(option);
+                });
+            });
+        }
+
+        function addDropdownListeners() {
+            const schoolDropdown = document.getElementById("schoolDropdown");
+            const studentDropdown = document.getElementById("studentDropdown");
+
+            schoolDropdown.addEventListener("change", () => {
+                const schoolId = schoolDropdown.value;
+                if (schoolId) {
+                    window.location.href = `school-page.html?id=${schoolId}`; // Redirect to school page
+                }
+            });
+
+            studentDropdown.addEventListener("change", () => {
+                const studentId = studentDropdown.value;
+                if (studentId) {
+                    window.location.href = `student-page.html?id=${studentId}`; // Redirect to student page
+                }
+            });
+        }
+
+        window.onload = () => {
+            populateDropdowns();
+            addDropdownListeners();
+        };
+    </script>
+
+</body>
+</html>

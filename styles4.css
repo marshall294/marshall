@@ -1,0 +1,47 @@
+/* styles.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full height for flex layout */
+}
+
+.content {
+    flex: 1; /* Allow content to grow */
+    padding: 20px; /* Padding for content */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out content and buttons */
+}
+
+.button-container {
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center the buttons */
+    gap: 20px; /* Space between buttons */
+    margin-top: 20px; /* Space above buttons */
+}
+
+.btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 15px 30px; /* Padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Block element */
+    font-size: 16px; /* Font size */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* 3D effect */
+    transition: all 0.2s ease; /* Transition effect */
+}
+
+.btn:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1); /* Darker shadow on hover */
+    transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+.btn:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08); /* Lighter shadow on click */
+    transform: translateY(1px); /* Slight downward movement on click */
+}

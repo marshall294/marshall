@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathCloud Tutorial - Learn More</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        select {
+            padding: 10px;
+            margin: 20px;
+            font-size: 1.2em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to MathCloud Tutorial!</h1>
+    <p>Your journey to mastering math starts here!</p>
+
+    <label for="schoolSelect">UPDATE:</label>
+    <select id="schoolSelect" onchange="redirectToSchool()">
+        <option value="">Select a school...</option>
+        <option value="index-update.html">INDEX PAGE</option>
+        <option value="danell/update-college-subjects.html">Update Danell Subjects</option>
+    </select>
+
+    <label for="studentSelect">Choose a student:</label>
+    <select id="studentSelect" onchange="redirectToStudent()">
+        <option value="">Select a student...</option>
+        <option value="danell/update-subject-1-computer-skills-lesson.html">Danel Comm-Skills</option>
+        <option value="danell/update-subject-2-computer-tech-lesson.html">Danell Comm-Tech</option>
+        <option value="student3.html">Student 3</option>
+    </select>
+
+    <script>
+        function redirectToSchool() {
+            var schoolSelect = document.getElementById("schoolSelect");
+            var selectedSchool = schoolSelect.value;
+            if (selectedSchool) {
+                window.location.href = selectedSchool;
+            }
+        }
+
+        function redirectToStudent() {
+            var studentSelect = document.getElementById("studentSelect");
+            var selectedStudent = studentSelect.value;
+            if (selectedStudent) {
+                window.location.href = selectedStudent;
+            }
+        }
+    </script>
+
+    <div class="footer">
+        &copy; 2024 MathCloud Tutorial. All rights reserved.
+    </div>
+
+</body>
+</html>

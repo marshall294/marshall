@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Page - MathCloud Tutorial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles4.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .welcome {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            color: #4CAF50;
+        }
+        .school-name {
+            font-size: 36px;
+            text-align: center;
+            color: #333;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            margin: 10px 0;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .card {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><div class="school-name" id="schoolName"></div></h1>
+    </header>
+
+    <main>
+    <div class="welcome-message">
+        <h3>🌟 Welcome to the Mathcloud Tutorial Hub! 🌟</h3>
+        <p>Hey there, future mathematicians, physicists, and tech enthusiasts! 🚀</p>
+        <p>You've just entered a dynamic space for exploring Mathematics, Physics, and ICT. Here, you'll find engaging tutorials and a supportive community to help you succeed.</p>
+        <p><strong>Please note:</strong> You'll need a password to access each subject. If you don’t have your password, feel free to contact Mathcloud on WhatsApp at <a href="https://wa.me/2348102341648">+2348102341648</a>.</p>
+        <p>Get ready to embark on your learning adventure! 🎉</p>
+        <p>Happy studying,<br>The Mathcloud Team</p>
+    </div>
+        <div class="school-name" id="schoolName"></div>
+        <div id="subjectContainer" class="card-container"></div>
+    </main>
+<div class="button-container">
+    <a href="register.html" class="btn">Register</a>
+    <a href="about.html" class="btn">More About Us</a>
+</div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAt1_h1qNpsvvTtJNojAq70eCqrfdJ0Sn0",
+            authDomain: "year-5.firebaseapp.com",
+            databaseURL: "https://year-5-default-rtdb.firebaseio.com",
+            projectId: "year-5",
+            storageBucket: "year-5.appspot.com",
+            messagingSenderId: "289843229551",
+            appId: "1:289843229551:web:7fe690010e854fd6a7ae9a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const schoolId = urlParams.get('id');
+
+        function displaySchoolData() {
+            const subjectContainer = document.getElementById("subjectContainer");
+            const schoolNameElement = document.getElementById("schoolName");
+            onValue(ref(db, 'schools/' + schoolId), (snapshot) => {
+                const schoolData = snapshot.val();
+                schoolNameElement.textContent = schoolData.name; // Display school name
+                createSubjectCard(schoolData.mathUrl, "Mathematics", subjectContainer);
+                createSubjectCard(schoolData.phyUrl, "Physics", subjectContainer);
+                createSubjectCard(schoolData.ictUrl, "ICT", subjectContainer);
+                createSubjectCard(schoolData.scheduleUrl, "Schedule", subjectContainer);
+            });
+        }
+
+        function createSubjectCard(url, subject, container) {
+            if (url) {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.textContent = subject;
+                card.onclick = () => window.open(url, "_blank");
+                container.appendChild(card);
+            }
+        }
+
+        window.onload = displaySchoolData;
+    </script>
+
+</body>
+</html>

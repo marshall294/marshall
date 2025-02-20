@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Schools and Students - MathCloud Tutorial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Update Schools and Students</h1>
+        <p>Add, edit, or remove schools and students easily.</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Add a School</h2>
+            <input type="text" id="newSchool" placeholder="School Name">
+            <input type="url" id="newSchoolUrl" placeholder="School Website URL">
+            <input type="url" id="newSchoolScheduleUrl" placeholder="School Schedule URL">
+            <label for="elementaryUrl">Elementary:</label>
+            <input type="url" id="elementaryUrl" placeholder="Elementary URL (e.html)">
+            <label for="middleSchoolUrl">Middle School:</label>
+            <input type="url" id="middleSchoolUrl" placeholder="Middle School URL (m.html)">
+            <label for="highSchoolUrl">High School:</label>
+            <input type="url" id="highSchoolUrl" placeholder="High School URL (h.html)">
+            <label for="collegeUrl">College:</label>
+            <input type="url" id="collegeUrl" placeholder="College URL (c.html)">
+            <button id="addSchoolBtn">Add School</button>
+        </section>
+
+        <section>
+            <h2>Add a Student</h2>
+            <input type="text" id="newStudent" placeholder="Student Name">
+            <input type="url" id="newStudentUrl" placeholder="Student Website URL">
+            <input type="url" id="newStudentScheduleUrl" placeholder="Student Schedule URL">
+            <label for="studentElementaryUrl">Elementary:</label>
+            <input type="url" id="studentElementaryUrl" placeholder="Elementary URL (e.html)">
+            <label for="studentMiddleSchoolUrl">Middle School:</label>
+            <input type="url" id="studentMiddleSchoolUrl" placeholder="Middle School URL (m.html)">
+            <label for="studentHighSchoolUrl">High School:</label>
+            <input type="url" id="studentHighSchoolUrl" placeholder="High School URL (h.html)">
+            <label for="studentCollegeUrl">College:</label>
+            <input type="url" id="studentCollegeUrl" placeholder="College URL (c.html)">
+            <button id="addStudentBtn">Add Student</button>
+        </section>
+
+        <section>
+            <h2>Existing Schools</h2>
+            <table id="schoolTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Schedule</th>
+                        <th>Elementary</th>
+                        <th>Middle School</th>
+                        <th>High School</th>
+                        <th>College</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="schoolList"></tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Existing Students</h2>
+            <table id="studentTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Schedule</th>
+                        <th>Elementary</th>
+                        <th>Middle School</th>
+                        <th>High School</th>
+                        <th>College</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentList"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2024 MathCloud Tutorial. All rights reserved.
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAt1_h1qNpsvvTtJNojAq70eCqrfdJ0Sn0",
+            authDomain: "year-5.firebaseapp.com",
+            databaseURL: "https://year-5-default-rtdb.firebaseio.com",
+            projectId: "year-5",
+            storageBucket: "year-5.appspot.com",
+            messagingSenderId: "289843229551",
+            appId: "1:289843229551:web:7fe690010e854fd6a7ae9a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        function addSchool() {
+            const schoolName = document.getElementById("newSchool").value;
+            const schoolUrl = document.getElementById("newSchoolUrl").value;
+            const schoolScheduleUrl = document.getElementById("newSchoolScheduleUrl").value;
+            const elementaryUrl = document.getElementById("elementaryUrl").value;
+            const middleSchoolUrl = document.getElementById("middleSchoolUrl").value;
+            const highSchoolUrl = document.getElementById("highSchoolUrl").value;
+            const collegeUrl = document.getElementById("collegeUrl").value;
+            if (schoolName) {
+                const newSchoolRef = push(ref(db, 'schools'));
+                set(newSchoolRef, { 
+                    name: schoolName, 
+                    website: schoolUrl,
+                    scheduleUrl: schoolScheduleUrl,
+                    elementaryUrl: elementaryUrl,
+                    middleSchoolUrl: middleSchoolUrl,
+                    highSchoolUrl: highSchoolUrl,
+                    collegeUrl: collegeUrl
+                });
+                document.getElementById("newSchool").value = '';
+                document.getElementById("newSchoolUrl").value = '';
+                document.getElementById("newSchoolScheduleUrl").value = '';
+                document.getElementById("elementaryUrl").value = '';
+                document.getElementById("middleSchoolUrl").value = '';
+                document.getElementById("highSchoolUrl").value = '';
+                document.getElementById("collegeUrl").value = '';
+                alert("School added!");
+            } else {
+                alert("Please enter a school name.");
+            }
+        }
+
+        function addStudent() {
+            const studentName = document.getElementById("newStudent").value;
+            const studentUrl = document.getElementById("newStudentUrl").value;
+            const studentScheduleUrl = document.getElementById("newStudentScheduleUrl").value;
+            const studentElementaryUrl = document.getElementById("studentElementaryUrl").value;
+            const studentMiddleSchoolUrl = document.getElementById("studentMiddleSchoolUrl").value;
+            const studentHighSchoolUrl = document.getElementById("studentHighSchoolUrl").value;
+            const studentCollegeUrl = document.getElementById("studentCollegeUrl").value;
+            if (studentName) {
+                const newStudentRef = push(ref(db, 'students'));
+                set(newStudentRef, { 
+                    name: studentName, 
+                    website: studentUrl,
+                    scheduleUrl: studentScheduleUrl,
+                    elementaryUrl: studentElementaryUrl,
+                    middleSchoolUrl: studentMiddleSchoolUrl,
+                    highSchoolUrl: studentHighSchoolUrl,
+                    collegeUrl: studentCollegeUrl
+                });
+                document.getElementById("newStudent").value = '';
+                document.getElementById("newStudentUrl").value = '';
+                document.getElementById("newStudentScheduleUrl").value = '';
+                document.getElementById("studentElementaryUrl").value = '';
+                document.getElementById("studentMiddleSchoolUrl").value = '';
+                document.getElementById("studentHighSchoolUrl").value = '';
+                document.getElementById("studentCollegeUrl").value = '';
+                alert("Student added!");
+            } else {
+                alert("Please enter a student name.");
+            }
+        }
+
+        function displayCurrentData() {
+            const schoolList = document.getElementById("schoolList");
+            const studentList = document.getElementById("studentList");
+
+            onValue(ref(db, 'schools'), (snapshot) => {
+                schoolList.innerHTML = ''; // Clear existing list
+                snapshot.forEach(childSnapshot => {
+                    const schoolData = childSnapshot.val();
+                    const row = document.createElement("tr");
+
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = schoolData.name;
+
+                    const websiteCell = document.createElement("td");
+                    const link = document.createElement("a");
+                    link.href = schoolData.website;
+                    link.textContent = "Website";
+                    link.target = "_blank"; // Open in new tab
+                    websiteCell.appendChild(link);
+
+                    const scheduleCell = document.createElement("td");
+                    const scheduleLink = document.createElement("a");
+                    scheduleLink.href = schoolData.scheduleUrl;
+                    scheduleLink.textContent = "Schedule";
+                    scheduleLink.target = "_blank"; // Open in new tab
+                    scheduleCell.appendChild(scheduleLink);
+
+                    const elementaryCell = document.createElement("td");
+                    const elementaryLink = document.createElement("a");
+                    elementaryLink.href = schoolData.elementaryUrl;
+                    elementaryLink.textContent = "Elementary";
+                    elementaryLink.target = "_blank";
+                    elementaryCell.appendChild(elementaryLink);
+
+                    const middleSchoolCell = document.createElement("td");
+                    const middleSchoolLink = document.createElement("a");
+                    middleSchoolLink.href = schoolData.middleSchoolUrl;
+                    middleSchoolLink.textContent = "Middle School";
+                    middleSchoolLink.target = "_blank";
+                    middleSchoolCell.appendChild(middleSchoolLink);
+
+                    const highSchoolCell = document.createElement("td");
+                    const highSchoolLink = document.createElement("a");
+                    highSchoolLink.href = schoolData.highSchoolUrl;
+                    highSchoolLink.textContent = "High School";
+                    highSchoolLink.target = "_blank";
+                    highSchoolCell.appendChild(highSchoolLink);
+
+                    const collegeCell = document.createElement("td");
+                    const collegeLink = document.createElement("a");
+                    collegeLink.href = schoolData.collegeUrl;
+                    collegeLink.textContent = "College";
+                    collegeLink.target = "_blank";
+                    collegeCell.appendChild(collegeLink);
+
+                    const actionsCell = document.createElement("td");
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Edit";
+                    editButton.onclick = () => editSchool(childSnapshot.key);
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    deleteButton.onclick = () => deleteSchool(childSnapshot.key);
+
+                    actionsCell.appendChild(editButton);
+                    actionsCell.appendChild(deleteButton);
+
+                    row.appendChild(nameCell);
+                    row.appendChild(websiteCell);
+                    row.appendChild(scheduleCell);
+                    row.appendChild(elementaryCell);
+                    row.appendChild(middleSchoolCell);
+                    row.appendChild(highSchoolCell);
+                    row.appendChild(collegeCell);
+                    row.appendChild(actionsCell);
+                    schoolList.appendChild(row);
+                });
+            });
+
+            onValue(ref(db, 'students'), (snapshot) => {
+                studentList.innerHTML = ''; // Clear existing list
+                snapshot.forEach(childSnapshot => {
+                    const studentData = childSnapshot.val();
+                    const row = document.createElement("tr");
+
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = studentData.name;
+
+                    const websiteCell = document.createElement("td");
+                    const link = document.createElement("a");
+                    link.href = studentData.website;
+                    link.textContent = "Website";
+                    link.target = "_blank"; // Open in new tab
+                    websiteCell.appendChild(link);
+
+                    const scheduleCell = document.createElement("td");
+                    const scheduleLink = document.createElement("a");
+                    scheduleLink.href = studentData.scheduleUrl;
+                    scheduleLink.textContent = "Schedule";
+                    scheduleLink.target = "_blank"; // Open in new tab
+                    scheduleCell.appendChild(scheduleLink);
+
+                    const elementaryCell = document.createElement("td");
+                    const elementaryLink = document.createElement("a");
+                    elementaryLink.href = studentData.elementaryUrl;
+                    elementaryLink.textContent = "Elementary";
+                    elementaryLink.target = "_blank";
+                    elementaryCell.appendChild(elementaryLink);
+
+                    const middleSchoolCell = document.createElement("td");
+                    const middleSchoolLink = document.createElement("a");
+                    middleSchoolLink.href = studentData.middleSchoolUrl;
+                    middleSchoolLink.textContent = "Middle School";
+                    middleSchoolLink.target = "_blank";
+                    middleSchoolCell.appendChild(middleSchoolLink);
+
+                    const highSchoolCell = document.createElement("td");
+                    const highSchoolLink = document.createElement("a");
+                    highSchoolLink.href = studentData.highSchoolUrl;
+                    highSchoolLink.textContent = "High School";
+                    highSchoolLink.target = "_blank";
+                    highSchoolCell.appendChild(highSchoolLink);
+
+                    const collegeCell = document.createElement("td");
+                    const collegeLink = document.createElement("a");
+                    collegeLink.href = studentData.collegeUrl;
+                    collegeLink.textContent = "College";
+                    collegeLink.target = "_blank";
+                    collegeCell.appendChild(collegeLink);
+
+                    const actionsCell = document.createElement("td");
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    deleteButton.onclick = () => deleteStudent(childSnapshot.key);
+
+                    actionsCell.appendChild(deleteButton);
+
+                    row.appendChild(nameCell);
+                    row.appendChild(websiteCell);
+                    row.appendChild(scheduleCell);
+                    row.appendChild(elementaryCell);
+                    row.appendChild(middleSchoolCell);
+                    row.appendChild(highSchoolCell);
+                    row.appendChild(collegeCell);
+                    row.appendChild(actionsCell);
+                    studentList.appendChild(row);
+                });
+            });
+        }
+
+        function editSchool(schoolId) {
+            const newSchoolName = prompt("Edit school name:", "");
+            const newSchoolUrl = prompt("Edit school website URL:", "http://example.com");
+            const newSchoolScheduleUrl = prompt("Edit school schedule URL:", "http://example.com/schedule");
+            const newElementaryUrl = prompt("Edit Elementary URL:", "http://example.com/e.html");
+            const newMiddleSchoolUrl = prompt("Edit Middle School URL:", "http://example.com/m.html");
+            const newHighSchoolUrl = prompt("Edit High School URL:", "http://example.com/h.html");
+            const newCollegeUrl = prompt("Edit College URL:", "http://example.com/c.html");
+            if (newSchoolName) {
+                set(ref(db, 'schools/' + schoolId), { 
+                    name: newSchoolName, 
+                    website: newSchoolUrl,
+                    scheduleUrl: newSchoolScheduleUrl,
+                    elementaryUrl: newElementaryUrl,
+                    middleSchoolUrl: newMiddleSchoolUrl,
+                    highSchoolUrl: newHighSchoolUrl,
+                    collegeUrl: newCollegeUrl
+                });
+            }
+        }
+
+        function deleteSchool(schoolId) {
+            if (confirm("Are you sure you want to delete this school?")) {
+                remove(ref(db, 'schools/' + schoolId));
+            }
+        }
+
+        function deleteStudent(studentId) {
+            if (confirm("Are you sure you want to delete this student?")) {
+                remove(ref(db, 'students/' + studentId));
+            }
+        }
+
+        // Event listeners for buttons
+        document.getElementById("addSchoolBtn").addEventListener("click", addSchool);
+        document.getElementById("addStudentBtn").addEventListener("click", addStudent);
+
+        window.onload = displayCurrentData;
+    </script>
+
+    <style>
+        /* Basic styles for the tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin-left: 5px;
+        }
+        a {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</body>
+</html>

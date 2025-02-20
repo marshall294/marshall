@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathCloud Tutorial Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #4A90E2;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            color: white;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-family: 'Pacifico', cursive;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            color: #d1e7dd;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: white;
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeIn 0.5s;
+            margin-top: 100px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            text-align: center;
+            color: #4A90E2;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, select:focus {
+            border-color: #4A90E2;
+        }
+        button {
+            background-color: #FF6F61;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #FF5A47;
+        }
+        .bundle {
+            background-color: white;
+            color: back;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .note {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="logo.png" alt="MathCloud Logo" class="logo"> <!-- Replace with actual logo -->
+    <h1>MathCloud Tutorial</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">Learn More</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Registration Form</h1>
+    <form id="registrationForm" onsubmit="sendMessage(event)">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="currentClass">Current Class:</label>
+        <input type="text" id="currentClass" name="currentClass" required>
+
+        <label for="parentsEmail">Parent's Email:</label>
+        <input type="email" id="parentsEmail" name="parentsEmail" required>
+
+        <label for="curriculum">Preferred Curriculum:</label>
+        <input type="text" id="curriculum" name="curriculum" required>
+
+        <label for="country">Country of Residence:</label>
+        <input type="text" id="country" name="country" required>
+
+        <label for="currency">Preferred Payment Currency:</label>
+        <select id="currency" name="currency" required>
+            <option value="">Select...</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="NGN">NGN</option>
+            <option value="CAD">CAD</option>
+            <option value="AUD">AUD</option>
+            <option value="INR">INR</option>
+        </select>
+
+        <label for="program">Select Program:</label>
+        <select id="program" name="program" required>
+            <option value="">Select...</option>
+            <option value="Online Tutorial">Online Tutorial</option>
+            <option value="Project Help">Project Help</option>
+            <option value="Assignment Help">Assignment Help</option>
+        </select>
+
+        <label for="subject">Select Subject:</label>
+        <select id="subject" name="subject" required>
+            <option value="">Select...</option>
+            <option value="Math">Math</option>
+            <option value="Physics">Physics</option>
+            <option value="ICT">ICT</option>
+            <option value="Math and Physics">Math and Physics</option>
+            <option value="Math and ICT">Math and ICT</option>
+            <option value="Physics and ICT">Physics and ICT</option>
+            <option value="Math, Physics and ICT">Math, Physics and ICT</option>
+        </select>
+
+        <label for="bundle">Select Bundle Frequency:</label>
+        <select id="bundle" name="bundle" required>
+            <option value="">Select...</option>
+            <option value="Once a Week">Once a Week</option>
+            <option value="Twice a Week">Twice a Week</option>
+            <option value="Thrice a Week">Thrice a Week</option>
+        </select>
+
+        <label for="contactMethod">Send Registration To:</label>
+        <select id="contactMethod" name="contactMethod" required>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="email">Email</option>
+        </select>
+
+        <button type="submit">Submit Registration</button>
+    </form>
+    <div class="bundle">
+        <h2>Available Bundles:</h2>
+        <p>Once a Week</p>
+        <p>Twice a Week</p>
+        <p>Thrice a Week</p>
+    </div>
+    <div class="note">
+        <p><strong>Note:</strong> Upon receiving your registration details, we will generate a payment link based on your preferences. Thank you for trusting us with your child's education!</p>
+    </div>
+</div>
+
+<script>
+    function sendMessage(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const currentClass = document.getElementById('currentClass').value;
+        const parentsEmail = document.getElementById('parentsEmail').value;
+        const curriculum = document.getElementById('curriculum').value;
+        const country = document.getElementById('country').value;
+        const currency = document.getElementById('currency').value;
+        const program = document.getElementById('program').value;
+        const subject = document.getElementById('subject').value;
+        const bundle = document.getElementById('bundle').value;
+        const contactMethod = document.getElementById('contactMethod').value;
+
+        const message = `*Registration Details:*\nName: ${name}\nCurrent Class: ${currentClass}\nParent's Email: ${parentsEmail}\nPreferred Curriculum: ${curriculum}\nCountry: ${country}\nPreferred Currency: ${currency}\nProgram: ${program}\nSubject: ${subject}\nBundle Frequency: ${bundle}`;
+        
+        if (contactMethod === 'whatsapp') {
+            const whatsappURL = `https://api.whatsapp.com/send?phone=2348102341648&text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        } else {
+            const emailSubject = "MathCloud Registration";
+            const emailBody = encodeURIComponent(message);
+            window.location.href = `mailto:marshall12340@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+        }
+    }
+</script>
+
+</body>
+</html>
