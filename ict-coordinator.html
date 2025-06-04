@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marshall Jacob | ICT Solutions for Schools</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #f2f4f7, #e8edf3);
+      color: #333;
+      overflow-x: hidden;
+    }
+    header {
+      background: url('https://arcsstee.org.ng/wp-content/uploads/2019/03/ict-consultancy-1024x411.jpg') no-repeat center/cover;
+      height: 100vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+    }
+    header h1, header p {
+      position: relative;
+      z-index: 1;
+    }
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.5rem;
+    }
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .service-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      position: relative;
+    }
+    .service-card:hover {
+      transform: rotateY(10deg);
+    }
+    .service-card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .service-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .slideshow {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .slideshow img {
+      width: 80%;
+      max-width: 600px;
+      border-radius: 15px;
+      animation: fade 10s infinite;
+    }
+    @keyframes fade {
+      0% { opacity: 1; }
+      45% { opacity: 0; }
+      55% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    form {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    form h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    form button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #2980b9;
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #2c3e50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Marshall Jacob</h1>
+  <p>ICT Consultant & Systems Engineer for Educational Excellence</p>
+</header>
+
+<section>
+  <h2 style="text-align:center; margin-bottom:40px;">Our Services</h2>
+  <div class="services">
+    <div class="service-card">
+      <img src="https://vecardigitalprogramming.com/wp-content/uploads/2024/10/school-management-software.jpg" alt="Management System">
+      <h3>School Management Systems</h3>
+      <p>Design, build, and manage robust custom digital platforms to handle academics, staff, results, billing, and more.</p>
+    </div>
+    <div class="service-card">
+      <img src="https://topgeek.in/uploads/2023/07/why-do-teachers-resist-using-technology-in-their-classrooms.webp" alt="Training">
+      <h3>Teacher ICT Training</h3>
+      <p>Hands-on training for teachers on how to use school platforms effectively, including tools for online learning.</p>
+    </div>
+    <div class="service-card">
+      <img src="https://www.sphinx-solution.com/blog/wp-content/uploads/2024/06/education-software-development-services.webp" alt="Educational Software">
+      <h3>Educational Software Development</h3>
+      <p>Custom apps for learning, testing, classroom management, and student engagement.</p>
+    </div>
+    <div class="service-card">
+      <img src="https://www.gettingsmart.com/wp-content/uploads/2012/02/Cloud-Computing-Mobility-Featured.jpg" alt="Mobile Apps">
+      <h3>Educational Mobile Apps</h3>
+      <p>Interactive apps for students, parents, and teachers to improve learning outcomes.</p>
+    </div>
+    <div class="service-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj9Ea_pq45Psi6CbRH7sc30zSruXktu-3rog&s" alt="Parental Control">
+      <h3>Parental Control Systems</h3>
+      <p>Ensure safe and secure access to school content and track student performance from home.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slideshow">
+  <img src="https://vecardigitalprogramming.com/wp-content/uploads/2024/10/school-management-software.jpg" alt="ICT in Education" id="slide">
+</section>
+
+<section>
+  <form id="contact-form">
+    <h2>School Application / Contact Form</h2>
+    <input type="text" name="name" placeholder="Your School Name or Contact Name" required>
+    <input type="email" name="email" placeholder="Email Address" required>
+    <input type="text" name="phone" placeholder="Phone Number">
+    <textarea name="message" rows="5" placeholder="How can we help your school?" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2024 Marshall Jacob | <a href="mailto:marshall12340@gmail.com" style="color:#fff; text-decoration:underline;">marshall12340@gmail.com</a> | <a href="https://www.mathcloud.store/" target="_blank" style="color:#fff;">mathcloud.store</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+<script>
+  emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+      .then(() => alert('Message sent successfully!'))
+      .catch(err => alert('Failed to send message.'));
+  });
+
+  // Slideshow animation
+  const slides = [
+    'https://topgeek.in/uploads/2023/07/why-do-teachers-resist-using-technology-in-their-classrooms.webp',
+    'https://www.sphinx-solution.com/blog/wp-content/uploads/2024/06/education-software-development-services.webp',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj9Ea_pq45Psi6CbRH7sc30zSruXktu-3rog&s'
+  ];
+  let i = 0;
+  setInterval(() => {
+    document.getElementById('slide').src = slides[i];
+    i = (i + 1) % slides.length;
+  }, 5000);
+</script>
+
+</body>
+</html>
