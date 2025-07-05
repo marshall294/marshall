@@ -1,207 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Marshall Jacob - Systems Reliability Engineer CV</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marshall Jacob - Full Stack Engineer CV</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7fb; color: #333; padding: 20px;
+    }
+    .container {
+      max-width: 1100px; margin: auto; background: white;
+      padding: 30px; border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    header {
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; margin-bottom: 30px;
+    }
+    .profile-img {
+      width: 120px; height: 120px; border-radius: 50%;
+      object-fit: cover; border: 3px solid #114b8a;
+    }
+    .title {
+      flex: 1; margin-left: 20px;
+    }
+    .title h1 { font-size: 2.5em; color: #114b8a; }
+    .title p { font-size: 1.1em; color: #555; margin-top: 5px; }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
+    section { margin-bottom: 40px; }
+    section h2 {
+      font-size: 1.8em; color: #114b8a; border-bottom: 2px solid #ddd;
+      padding-bottom: 6px; margin-bottom: 20px;
+    }
+    ul { list-style: none; padding-left: 0; }
+    ul li {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+    ul li::before {
+      content: '✔'; color: #3498db;
+      position: absolute; left: 0;
+    }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-
-        header .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 5px solid #333;
-        }
-
-        header .name {
-            font-size: 36px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        header .job-title {
-            font-size: 18px;
-            font-weight: 300;
-            color: #777;
-        }
-
-        section {
-            margin-bottom: 40px;
-        }
-
-        section h2 {
-            font-size: 28px;
-            font-weight: 600;
-            border-bottom: 2px solid #2c3e50;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-
-        .skills ul, .experience ul, .education ul, .certifications ul, .contact-info ul {
-            list-style-type: none;
-        }
-
-        .skills ul li, .experience ul li, .education ul li, .certifications ul li, .contact-info ul li {
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .skills ul li:before, .experience ul li:before, .education ul li:before, .certifications ul li:before, .contact-info ul li:before {
-            content: '•';
-            color: #3498db;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .contact-info a {
-            display: inline-block;
-            background: #3498db;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-right: 15px;
-            font-size: 16px;
-        }
-
-        .contact-info a:hover {
-            background: #2980b9;
-        }
-
-        footer {
-            text-align: center;
-            font-size: 14px;
-            color: #777;
-            margin-top: 40px;
-        }
-
-    </style>
+    .experience ul li strong, .education ul li strong {
+      display: block; font-size: 1.1em; color: #2c3e50;
+    }
+    .contact-info a {
+      color: #114b8a; text-decoration: none;
+      font-weight: bold;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
+    }
+    footer {
+      text-align: center; color: #888; font-size: 14px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-
 <div class="container">
-    <!-- Header Section -->
-    <header>
-        <img src="imagescv.jpeg" alt="Marshall Jacob" class="profile-img">
-        <div>
-            <h1 class="name">Marshall Jacob</h1>
-            <p class="job-title">Systems Reliability Engineer</p>
-        </div>
-    </header>
 
-    <!-- About Me Section -->
-    <section>
-        <h2>About Me</h2>
-        <p>Experienced Systems Reliability Engineer with over 5 years of experience in enterprise-level system engineering and cloud technologies. I specialize in cloud platforms, DevOps practices, automation, and ensuring the reliability of cloud infrastructures. I am passionate about optimizing system performance, improving operational efficiency, and maintaining security best practices across all systems.</p>
-    </section>
+  <!-- Header -->
+  <header>
+    <img src="images.jpeg" alt="Marshall Jacob" class="profile-img">
+    <div class="title">
+      <h1>Marshall Jacob</h1>
+      <p>Full Stack Developer | Backend & Frontend Expert | 7+ Years Experience</p>
+    </div>
+  </header>
 
-    <!-- Core Skills Section -->
-    <section class="skills">
-        <h2>Core Skills</h2>
+  <!-- About -->
+  <section>
+    <h2>About Me</h2>
+    <p>
+      Innovative and detail-oriented Full Stack Developer with 7+ years of experience building scalable web apps, APIs, and cloud-based systems.
+      Proficient in backend services and frontend architecture. Passionate about clean code, intuitive design, and DevOps automation.
+    </p>
+  </section>
+
+  <!-- Core Skills -->
+  <section class="skills">
+    <h2>Core Technical Skills</h2>
+    <div class="grid-2">
+      <ul>
+        <li>JavaScript, TypeScript, HTML5, CSS3, Tailwind, Bootstrap</li>
+        <li>React, Vue, Angular, jQuery</li>
+        <li>Responsive Design (mobile-first, media queries)</li>
+        <li>RESTful APIs, GraphQL</li>
+        <li>Firebase, MongoDB, PostgreSQL, MySQL</li>
+      </ul>
+      <ul>
+        <li>Node.js, Express.js, PHP, Python (Flask/Django)</li>
+        <li>Docker, GitHub Actions, CI/CD</li>
+        <li>Google Cloud, Firebase, Netlify, Vercel, AWS (EC2, S3)</li>
+        <li>Authentication (JWT, OAuth2, Firebase Auth)</li>
+        <li>Agile, Scrum, Jira, Trello, Slack</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="experience">
+    <h2>Professional Experience</h2>
+    <ul>
+      <li><strong>Lead Full Stack Developer | TechNova Solutions (2020 - Present)</strong>
         <ul>
-            <li>Azure Cloud Computing & Management</li>
-            <li>Systems Reliability Engineering</li>
-            <li>Cloud Infrastructure & Deployment</li>
-            <li>Agile & DevOps Methodologies</li>
-            <li>PowerShell, C#, Python Scripting</li>
-            <li>Networking & Security Best Practices</li>
-            <li>CI/CD Pipeline Integration</li>
-            <li>System Architecture Design</li>
-            <li>Cloud Migration & Implementation</li>
-            <li>Monitoring & Incident Management</li>
+          <li>Designed and deployed multi-tenant SaaS platforms using React, Node.js & Firebase.</li>
+          <li>Optimized API performance by 40% using async processing and database indexing.</li>
+          <li>Led migration from monolithic app to microservices architecture.</li>
         </ul>
-    </section>
-
-    <!-- Professional Experience Section -->
-    <section class="experience">
-        <h2>Professional Experience</h2>
+      </li>
+      <li><strong>Frontend Engineer | DevSpark Labs (2017 - 2020)</strong>
         <ul>
-            <li><strong>Senior Systems Reliability Engineer | TechCorp Solutions (2019 - Present)</strong>
-                <ul>
-                    <li>Managed and optimized cloud infrastructure, improving system uptime by 25%.</li>
-                    <li>Developed automated monitoring tools using PowerShell and Python for incident management.</li>
-                    <li>Collaborated with cross-functional teams to implement CI/CD pipelines and improve software delivery.</li>
-                    <li>Designed and implemented disaster recovery solutions, ensuring 99.9% availability for critical services.</li>
-                </ul>
-            </li>
-            <li><strong>Systems Engineer | CloudTech Inc. (2016 - 2019)</strong>
-                <ul>
-                    <li>Designed and implemented Azure cloud solutions, achieving 99.9% uptime for key services.</li>
-                    <li>Automated daily workflows and system monitoring to reduce manual intervention by 40%.</li>
-                    <li>Supported DevOps teams in setting up efficient deployment pipelines.</li>
-                </ul>
-            </li>
+          <li>Built responsive UI components with React & Vue; improved usability scores by 30%.</li>
+          <li>Collaborated on CI/CD pipelines with Docker and GitHub Actions.</li>
+          <li>Integrated real-time chat and notification system with Firebase Realtime DB.</li>
         </ul>
-    </section>
-
-    <!-- Education Section -->
-    <section class="education">
-        <h2>Education</h2>
+      </li>
+      <li><strong>Junior Backend Developer | CodeLogic (2015 - 2017)</strong>
         <ul>
-            <li><strong>B.Sc. (Ed) Mathematics</strong> | University of Abuja, 2012</li>
-            <li><strong>NCE Mathematics/Physics</strong> | 2006</li>
+          <li>Created scalable APIs using Express.js and MongoDB for client projects.</li>
+          <li>Maintained PHP-based CMS systems and optimized database queries.</li>
         </ul>
-    </section>
+      </li>
+    </ul>
+  </section>
 
-    <!-- Professional Certifications Section -->
-    <section class="certifications">
-        <h2>Professional Certifications</h2>
-        <ul>
-            <li>Google IT Admin</li>
-            <li>Microsoft Global Educator</li>
-            <li>Cisco Cybersecurity Professional</li>
-        </ul>
-    </section>
+  <!-- Education -->
+  <section class="education">
+    <h2>Education</h2>
+    <ul>
+      <li><strong>B.Sc. (Ed) Mathematics</strong> – University of Abuja, 2012</li>
+      <li><strong>NCE Mathematics/Physics</strong> – College of Education, 2006</li>
+    </ul>
+  </section>
 
-    <!-- Contact Info Section -->
-    <section class="contact-info">
-        <h2>Contact Information</h2>
-        <ul>
-            <li>Email: <a href="mailto:marshall12340@gmail.com">marshall12340@gmail.com</a></li>
-            <li>Phone: +234 810 234 1648</li>
-            <li>Portfolio: <a href="/portfolio">Portfolio</a></li>
-            <li>Website: <a href="https://www.mathcloud.store/" target="_blank">mathcloud.store</a></li>
-            <li>LinkedIn: <a href="https://linkedin.com/in/marshalljacob" target="_blank">linkedin.com/in/marshalljacob</a></li>
-        </ul>
-    </section>
+  <!-- Certifications -->
+  <section class="certifications">
+    <h2>Professional Certifications</h2>
+    <ul>
+      <li>Google IT Automation with Python (Coursera)</li>
+      <li>Firebase Web App Developer (Google Cloud)</li>
+      <li>Microsoft Certified: Azure Developer Associate</li>
+      <li>FreeCodeCamp Full Stack Web Dev</li>
+    </ul>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-info">
+    <h2>Contact Information</h2>
+    <ul>
+      <li>Email: <a href="mailto:marshall12340@gmail.com">marshall12340@gmail.com</a></li>
+      <li>Phone: +234 810 234 1648</li>
+      <li>Portfolio: <a href="https://mathcloud.store" target="_blank">mathcloud.store</a></li>
+      <li>LinkedIn: <a href="https://linkedin.com/in/marshalljacob" target="_blank">linkedin.com/in/marshalljacob</a></li>
+    </ul>
+  </section>
 
 </div>
 
 <footer>
-    <p>&copy; 2024 Marshall Jacob. All Rights Reserved.</p>
+  &copy; 2024 Marshall Jacob. All Rights Reserved.
 </footer>
-
 </body>
 </html>
